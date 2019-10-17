@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output
 from server import app
 from classes.User import User
 
-from views import login
+from layouts import login, page
 
 cur_user = User.get_instance()
 
@@ -27,6 +27,8 @@ def display_page(pathname):
 
     if not cur_user.is_user_logged_in():
         return dcc.Location(pathname='/login', id='redirect_to_login')
+
+    return page.layout
 
 
 if __name__ == '__main__':

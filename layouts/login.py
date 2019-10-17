@@ -6,8 +6,8 @@ from server import app
 from classes.User import User
 import config
 
-username = config.username if config.username else ''
-password = config.password if config.password else ''
+username = '' #config.username if config.username else ''
+password = '' #config.password if config.password else ''
 
 cur_user = User.get_instance()
 
@@ -61,16 +61,13 @@ layout = dbc.Row(
                State('password', 'value')])
 def user_login(n_clicks, username, password):
     if cur_user.user_login(username, password):
-        return '/dashboard'
+        return '/'
 
 
 @app.callback(Output('output-state', 'children'),
               [Input('login-button', 'n_clicks')])
 def update_output(n_clicks):
     if n_clicks > 0:
-        if cur_user.is_user_logged_in():
-            return ''
-        else:
-            return 'Incorrect username or password'
+        return cur_user.get_message()
     else:
         return ''

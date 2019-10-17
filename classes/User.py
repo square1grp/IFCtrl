@@ -3,7 +3,7 @@ import requests
 
 class User:
     __instance = None
-
+    __message = None
     __token = None
 
     @staticmethod
@@ -26,10 +26,15 @@ class User:
         
         if response.status_code == 200:
             self.__token = response.json()['key']
+            self.__message = None
 
             return True
         else:
+            self.__message = 'Incorrect Username or Password'
             return False
 
     def user_logout(self):
         self.__token = None
+    
+    def get_message(self):
+        return self.__message

@@ -1,0 +1,13 @@
+nav.navbar {
+    background-color: transparent !important;
+}
+
+nav.navbar ul.navbar-nav {
+    flex-direction: column;
+    margin-left   : 0px !important;
+}
+
+nav.navbar ul.navbar-nav .nav-link {
+    padding-right: 0;
+    padding-left: 0;
+}
