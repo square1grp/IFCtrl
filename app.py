@@ -2,11 +2,10 @@ import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
-
 from server import app
 from classes.User import User
-
 from layouts import login, page
+import config
 
 cur_user = User.get_instance()
 
@@ -32,4 +31,4 @@ def display_page(pathname):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=config.dev_env, host=config.host_ip)
