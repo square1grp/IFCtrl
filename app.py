@@ -21,9 +21,10 @@ app.layout = html.Div(
 @app.callback(Output('page-content', 'children'),
               [Input('page_url', 'pathname')])
 def display_page(pathname):
+    print(cur_user.is_user_logged_in())
     if pathname == '/login' and not cur_user.is_user_logged_in():
         return login.layout
-    
+
     if not cur_user.is_user_logged_in():
         return dcc.Location(pathname='/login', id='redirect_to_login')
 
