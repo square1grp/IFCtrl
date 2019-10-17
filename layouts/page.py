@@ -2,6 +2,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
+from classes.content_area import ContentArea
 from layouts import header, control, navigation, content
 from server import app
 from variables import json_data
@@ -35,4 +36,7 @@ def display_page(pathname):
     if page is None:
         return html.Div(['Not Found'])
 
-    return slug
+
+    content_area = ContentArea(page)
+
+    return content_area.get_content()

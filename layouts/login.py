@@ -6,8 +6,8 @@ from server import app
 from classes.User import User
 import config
 
-username = '' #config.username if config.username else ''
-password = '' #config.password if config.password else ''
+username = ''  # config.username if config.username else ''
+password = ''  # config.password if config.password else ''
 
 cur_user = User.get_instance()
 
@@ -32,6 +32,7 @@ layout = dbc.Row(
         dbc.Col(
             [
                 dcc.Location(id='login_url', refresh=True),
+                html.H1('Log In', className='text-center'),
                 dbc.Form([
                     username_input,
                     password_input,
@@ -42,8 +43,7 @@ layout = dbc.Row(
                         id='login-button',
                         className='float-right'
                     )
-                ]),
-                html.Div(children='', id='output-state'),
+                ])
             ],
             className='col-12 col-md-6 col-lg-4 m-auto'
         )
@@ -62,12 +62,3 @@ layout = dbc.Row(
 def user_login(n_clicks, username, password):
     if cur_user.user_login(username, password):
         return '/'
-
-
-@app.callback(Output('output-state', 'children'),
-              [Input('login-button', 'n_clicks')])
-def update_output(n_clicks):
-    if n_clicks > 0:
-        return cur_user.get_message()
-    else:
-        return ''
