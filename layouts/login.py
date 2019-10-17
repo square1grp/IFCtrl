@@ -4,10 +4,9 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from server import app
 from classes.User import User
-import config
 
-username = ''  # config.username if config.username else ''
-password = ''  # config.password if config.password else ''
+username = ''
+password = ''
 
 cur_user = User.get_instance()
 
