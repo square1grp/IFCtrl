@@ -1,3 +1,5 @@
+import random
+
 colors = {
     "black":    "#000000",
     "white":    "#FFFFFF",
@@ -7,6 +9,33 @@ colors = {
     "yellow":   "#FdF1D0",
     "purple":   "#E2D5E6"
 }
+
+
+def get_graph_data(graph_type):
+    if graph_type == 'scatter':
+        # modes = ['lines', 'markers', 'lines+markers']
+
+        return [{
+            'x': [i for i in range(5)],
+            'y': [random.randint(0, 2) for i in range(5)],
+            'mode': 'lines+markers',  # modes[random.randint(1, 3) % 3]
+            'type': graph_type
+        } for j in range(2)]
+
+    if 'bar' in graph_type:
+
+        return [{
+            'x': ['Los Angeles', 'Washington', 'Las Vegas'],
+            'y': [random.randint(-2, 2) for i in range(3)] if graph_type == 'bar1' else [random.randint(1, 5) for i in range(3)],
+            'type': 'bar'
+        } for j in range(2)]
+
+    if graph_type == 'pie':
+        return [{
+            'labels': ['Oxygen', 'Hydrogen', 'Carbon_Dioxide', 'Nitrogen'],
+            'values': [random.randrange(10, 45) * 100 for i in range(4)],
+            'type': 'pie'
+        }]
 
 
 json_data = {
@@ -37,21 +66,25 @@ json_data = {
                 "type": "mirror",
                 "children": [{
                     "config": {
+                        "graph_data": get_graph_data("bar1"),
                         "backgroundColor": "#E2D5E6"
                     }
                 }, {
                     "config": {
+                        "graph_data": get_graph_data("bar2"),
                         "backgroundColor": "#E2D5E6"
                     }
                 }]
             }, {
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("scatter"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -59,6 +92,7 @@ json_data = {
             "widgets": [{
                 "size": "xlarge",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -66,11 +100,13 @@ json_data = {
             "widgets": [{
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("scatter"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
                 "config": {
+                    "graph_data": get_graph_data("scatter"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -83,11 +119,13 @@ json_data = {
             "widgets": [{
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("bar1"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
                 "config": {
+                    "graph_data": get_graph_data("bar2"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -95,11 +133,13 @@ json_data = {
             "widgets": [{
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("scatter"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -107,6 +147,7 @@ json_data = {
             "widgets": [{
                 "size": "xlarge",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -119,6 +160,7 @@ json_data = {
             "widgets": [{
                 "size": "xlarge",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -126,11 +168,13 @@ json_data = {
             "widgets": [{
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -138,11 +182,13 @@ json_data = {
             "widgets": [{
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -155,6 +201,7 @@ json_data = {
             "widgets": [{
                 "size": "xlarge",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -162,11 +209,13 @@ json_data = {
             "widgets": [{
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -174,6 +223,7 @@ json_data = {
             "widgets": [{
                 "size": "xlarge",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -181,11 +231,13 @@ json_data = {
             "widgets": [{
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -198,6 +250,7 @@ json_data = {
             "widgets": [{
                 "size": "xlarge",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -205,6 +258,7 @@ json_data = {
             "widgets": [{
                 "size": "xlarge",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -212,11 +266,13 @@ json_data = {
             "widgets": [{
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -224,11 +280,13 @@ json_data = {
             "widgets": [{
                 "size": "medium",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
                 "config": {
+                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
