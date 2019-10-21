@@ -59,6 +59,7 @@ layout = dbc.Row(
     }
 )
 
+
 # callbacks for login action
 @app.callback(Output('login_url', 'pathname'),
               [Input('login-button', 'n_clicks')],

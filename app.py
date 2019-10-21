@@ -1,7 +1,8 @@
 import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
-from dash.dependencies import Input, Output
+from dash.exceptions import PreventUpdate
+from dash.dependencies import Input, Output, State
 from server import app
 from classes.User import User
 from layouts import login, page
@@ -13,12 +14,43 @@ cur_user = User.get_instance()
 # create page layout
 app.layout = html.Div(
     [
+        # The local store will take the initial data
+        # only the first time the page is loaded
+        # and keep it until it is cleared.
+        dcc.Store(id='local_storage', storage_type='local'),
+        dcc.Input(id='is_storage_checked', type='hidden', value='No'),
         # container for the page content
         dbc.Container(id='page-content', fluid=True),
         # url management
         dcc.Location(id='page_url', refresh=False),
     ]
 )
+
+
+# callback to check user_token in local storage
+@app.callback(Output('is_storage_checked', 'value'),
+              [Input('local_storage', 'modified_timestamp')],
+              [State('local_storage', 'data')])
+def check_local_storage(ts, local_storage):
+    if ts is None:
+        PreventUpdate
+
+    local_storage = local_storage or {'token': None}
+    token = local_storage.get('token')
+
+    if token:
+        cur_user.set_token(token)
+
+    return 'Yes'
+
+
+# set token to the local storage
+@app.callback(Output('local_storage', 'data'),
+              [Input('page_url', 'pathname')])
+def store_user_token(pathname):
+    if pathname:
+        return {'token': cur_user.get_token()}
+
 
 # callbacks, show page content under correct page urls
 @app.callback(Output('page-content', 'children'),
