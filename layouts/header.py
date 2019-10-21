@@ -36,7 +36,7 @@ layout = dbc.Row(
 # log out callback
 @app.callback(Output('logout_url', 'pathname'),
               [Input('logout-button', 'n_clicks')])
-def user_login(n_clicks):
+def user_logout(n_clicks):
     if n_clicks:
         cur_user.user_logout()
-        return '/login'
+        return '/logout'

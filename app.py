@@ -48,7 +48,9 @@ def check_local_storage(ts, local_storage):
 @app.callback(Output('local_storage', 'data'),
               [Input('page_url', 'pathname')])
 def store_user_token(pathname):
-    if pathname:
+    if pathname is '/logout':
+        return {'token': None}
+    elif pathname:
         return {'token': cur_user.get_token()}
 
 
@@ -56,6 +58,10 @@ def store_user_token(pathname):
 @app.callback(Output('page-content', 'children'),
               [Input('page_url', 'pathname')])
 def display_page(pathname):
+    if pathname == '/logout':
+        cur_user.user_logout()
+        dcc.Location(pathname='/login', id='redirect_to_login')
+    
     # check if the current page is login page or user is not logged in
     # if yes, show login page
     if pathname == '/login' and not cur_user.is_user_logged_in():
