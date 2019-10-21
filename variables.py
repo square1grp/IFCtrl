@@ -10,7 +10,7 @@ colors = {
     "purple":   "#E2D5E6"
 }
 
-
+# create mockup data
 def get_graph_data(graph_type):
     if graph_type == 'scatter':
         # modes = ['lines', 'markers', 'lines+markers']
