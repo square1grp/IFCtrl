@@ -5,6 +5,8 @@ external_stylesheets = [
     dbc.themes.BOOTSTRAP,
     '/assets/css/styles.css',
 ]
+
+# Create dash app
 app = dash.Dash(
     __name__,
     external_stylesheets=external_stylesheets,

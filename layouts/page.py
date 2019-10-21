@@ -7,7 +7,7 @@ from layouts import header, control, navigation, content
 from server import app
 from variables import json_data
 
-
+# create page layout
 layout = [
     header.layout,
     control.layout,
@@ -19,7 +19,7 @@ layout = [
     ])
 ]
 
-
+# show correct page content by the current url
 @app.callback(Output('content-area', 'children'),
               [Input('dashboard_url', 'pathname')])
 def display_page(pathname):

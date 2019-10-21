@@ -4,6 +4,8 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 
 
+# content area class
+# this class manages the content(widget-board/report)
 class ContentArea:
     content_type = 'widget-board'
     content_data = []
@@ -12,6 +14,7 @@ class ContentArea:
         self.content_type = page['content-type']
         self.content_data = page['config']
 
+    # get widget boards content
     def get_content_widget_boards(self):
         children = []
 
@@ -22,9 +25,12 @@ class ContentArea:
 
         return children
 
+    # get report content
     def get_content_reports(self):
         return 'This is a blank-report'
 
+    # get content
+    # widget-baord feeds or reports
     def get_content(self):
         if self.content_type == 'widget-board':
             return self.get_content_widget_boards()

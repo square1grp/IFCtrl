@@ -3,11 +3,12 @@ from components.widget import Widget
 import dash_bootstrap_components as dbc
 import dash_html_components as html
 
-
+# create wdiget board
 def get_widget_board(widgets):
     children = []
 
     for widget in widgets:
+        # check if widget is mirror layout which shows 2 widgets
         if 'type' in widget and widget['type'] is 'mirror':
             mirror_children = []
 
@@ -32,6 +33,7 @@ def get_widget_board(widgets):
                     % ('col-md-4' if widget['size'] == 'medium' else ('col-md-8' if widget['size'] == 'large' else ''))
                 )
             )
+        # widget which is not mirror layouted
         else:
             ele_widget = Widget(widget['config'])
 
@@ -43,6 +45,7 @@ def get_widget_board(widgets):
                 )
             )
 
+    # add widgets to the widget board
     board_feed = dbc.Row(
         children,
         className="widget-board"

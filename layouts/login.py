@@ -6,11 +6,13 @@ from server import app
 from classes.User import User
 import config
 
-username = '' # config.username if config.username else ''
-password = '' # config.password if config.password else ''
+username = config.username if config.username else ''
+password = config.password if config.password else ''
 
+# get the current user instance
 cur_user = User.get_instance()
 
+# username input form field
 username_input = dbc.FormGroup(
     [
         dbc.Label('Username', html_for='username'),
@@ -19,6 +21,7 @@ username_input = dbc.FormGroup(
     ]
 )
 
+# password input form field
 password_input = dbc.FormGroup(
     [
         dbc.Label('Password', html_for='password'),
@@ -27,10 +30,12 @@ password_input = dbc.FormGroup(
     ]
 )
 
+# create login layout
 layout = dbc.Row(
     [
         dbc.Col(
             [
+                # for a login callback
                 dcc.Location(id='login_url', refresh=True),
                 html.H1('Log In', className='text-center'),
                 dbc.Form([
@@ -54,11 +59,11 @@ layout = dbc.Row(
     }
 )
 
-
+# callbacks for login action
 @app.callback(Output('login_url', 'pathname'),
               [Input('login-button', 'n_clicks')],
               [State('username', 'value'),
                State('password', 'value')])
 def user_login(n_clicks, username, password):
-    if cur_user.user_login(username, password):
+    if n_clicks and cur_user.user_login(username, password):
         return '/'
