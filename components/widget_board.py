@@ -1,7 +1,7 @@
-from components.widget import Widget
-
 import dash_bootstrap_components as dbc
 import dash_html_components as html
+from importlib import import_module
+
 
 # create wdiget board
 def get_widget_board(widgets):
@@ -9,10 +9,12 @@ def get_widget_board(widgets):
 
     for widget in widgets:
         # check if widget is mirror layout which shows 2 widgets
-        if 'type' in widget and widget['type'] is 'mirror':
+        if 'layout' in widget and widget['layout'] is 'mirror':
             mirror_children = []
 
             for idx, child_widget in enumerate(widget['children'], start=1):
+                Widget = getattr(import_module('components.widgets.%s' % child_widget['type']), 'Widget')
+
                 ele_widget = Widget(child_widget['config'], True)
 
                 mirror_children.append(
@@ -35,6 +37,7 @@ def get_widget_board(widgets):
             )
         # widget which is not mirror layouted
         else:
+            Widget = getattr(import_module('components.widgets.%s' % widget['type']), 'Widget')
             ele_widget = Widget(widget['config'])
 
             children.append(

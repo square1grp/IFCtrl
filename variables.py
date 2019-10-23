@@ -11,6 +11,8 @@ colors = {
 }
 
 # create mockup data
+
+
 def get_graph_data(graph_type):
     if graph_type == 'scatter':
         # modes = ['lines', 'markers', 'lines+markers']
@@ -38,22 +40,54 @@ def get_graph_data(graph_type):
         }]
 
 
+def get_graph(graph_type):
+    layout = {
+        'title': {
+            'text': 'US City',
+            'pos_x': 0.5,
+            'pos_y': 0.9
+        },
+        'showLegend': True,
+        'legend': {
+            'pos_x': 0,
+            'pos_y': 1.0
+        },
+        'margin': {
+            'left': 30,
+            'right': 10,
+            'top': 50,
+            'bottom': 30
+        }
+    }
+
+    if "bar" in graph_type:
+        return {
+            'data': [{
+                'x': ['Los Angeles', 'Washington', 'Las Vegas'],
+                'y': [random.randint(1, 5) for i in range(3)],
+                'name': 'City',
+                'color': 'rgb(%s, %s, %s)' % (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            }],
+            'layout': layout
+        }
+
+
 json_data = {
     "nav": [{
         "label": "Page Nav Item 1",
         "target": "/page-1"
     }, {
         "label": "Page Nav Item 2",
-        "target": "/page-2"
+        "target": "/page-1"
     }, {
         "label": "Page Nav Item 3",
-        "target": "/page-3"
+        "target": "/page-1"
     }, {
         "label": "Page Nav Item 4",
-        "target": "/page-4"
+        "target": "/page-1"
     }, {
         "label": "Page Nav Item 5",
-        "target": "/page-5"
+        "target": "/page-1"
     }],
 
     "pages": [{
@@ -63,230 +97,53 @@ json_data = {
         "config": [{
             "widgets": [{
                 "size": "medium",
-                "type": "mirror",
+                "layout": "mirror",
                 "children": [{
+                    "type": "sm-bar",
                     "config": {
-                        "graph_data": get_graph_data("bar1"),
+                        "graph": get_graph("sm-bar"),
                         "backgroundColor": "#E2D5E6"
                     }
                 }, {
+                    "type": "sm-bar",
                     "config": {
-                        "graph_data": get_graph_data("bar2"),
+                        "graph": get_graph("sm-bar"),
                         "backgroundColor": "#E2D5E6"
                     }
                 }]
             }, {
                 "size": "medium",
+                "type": "md-scatter",
                 "config": {
-                    "graph_data": get_graph_data("scatter"),
+                    "graph": get_graph("md-scatter"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "medium",
+                "type": "md-scatter",
                 "config": {
-                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
         }, {
             "widgets": [{
                 "size": "xlarge",
+                "type": "xl-scatter",
                 "config": {
-                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
         }, {
             "widgets": [{
                 "size": "medium",
+                "type": "md-scatter",
                 "config": {
-                    "graph_data": get_graph_data("scatter"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
+                "type": "lg-scatter",
                 "config": {
-                    "graph_data": get_graph_data("scatter"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }]
-    }, {
-        "name": "Page Title 2",
-        "slug": "page-2",
-        "content-type": "widget-board",
-        "config": [{
-            "widgets": [{
-                "size": "medium",
-                "config": {
-                    "graph_data": get_graph_data("bar1"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }, {
-                "size": "large",
-                "config": {
-                    "graph_data": get_graph_data("bar2"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "medium",
-                "config": {
-                    "graph_data": get_graph_data("scatter"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }, {
-                "size": "large",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "xlarge",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }]
-    }, {
-        "name": "Page Title 3",
-        "slug": "page-3",
-        "content-type": "widget-board",
-        "config": [{
-            "widgets": [{
-                "size": "xlarge",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "medium",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }, {
-                "size": "large",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "medium",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }, {
-                "size": "large",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }]
-    }, {
-        "name": "Page Title 4",
-        "slug": "page-4",
-        "content-type": "widget-board",
-        "config": [{
-            "widgets": [{
-                "size": "xlarge",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "medium",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }, {
-                "size": "large",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "xlarge",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "medium",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }, {
-                "size": "large",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }]
-    }, {
-        "name": "Page Title 5",
-        "slug": "page-5",
-        "content-type": "widget-board",
-        "config": [{
-            "widgets": [{
-                "size": "xlarge",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "xlarge",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "medium",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }, {
-                "size": "large",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "medium",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }, {
-                "size": "large",
-                "config": {
-                    "graph_data": get_graph_data("pie"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
