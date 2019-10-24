@@ -10,36 +10,8 @@ colors = {
     "purple":   "#E2D5E6"
 }
 
+
 # create mockup data
-
-
-def get_graph_data(graph_type):
-    if graph_type == 'scatter':
-        # modes = ['lines', 'markers', 'lines+markers']
-
-        return [{
-            'x': [i for i in range(5)],
-            'y': [random.randint(0, 2) for i in range(5)],
-            'mode': 'lines+markers',  # modes[random.randint(1, 3) % 3]
-            'type': graph_type
-        } for j in range(2)]
-
-    if 'bar' in graph_type:
-
-        return [{
-            'x': ['Los Angeles', 'Washington', 'Las Vegas'],
-            'y': [random.randint(-2, 2) for i in range(3)] if graph_type == 'bar1' else [random.randint(1, 5) for i in range(3)],
-            'type': 'bar'
-        } for j in range(2)]
-
-    if graph_type == 'pie':
-        return [{
-            'labels': ['Oxygen', 'Hydrogen', 'Carbon_Dioxide', 'Nitrogen'],
-            'values': [random.randrange(10, 45) * 100 for i in range(4)],
-            'type': 'pie'
-        }]
-
-
 def get_graph(graph_type):
     layout = {
         'title': {
@@ -68,6 +40,18 @@ def get_graph(graph_type):
                 'name': 'City',
                 'color': 'rgb(%s, %s, %s)' % (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             }],
+            'layout': layout
+        }
+
+    if "scatter" in graph_type:
+        return {
+            'data': [{
+                'x': [i+1 for i in range(10)],
+                'y': [random.randint(1, 100) for i in range(10)],
+                'mode': 'lines+markers',  # 'lines', 'markers', 'lines+markers'
+                'name': 'City',
+                'color': 'rgb(%s, %s, %s)' % (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            } for j in range(2)],
             'layout': layout
         }
 
@@ -122,6 +106,7 @@ json_data = {
                 "size": "medium",
                 "type": "md-scatter",
                 "config": {
+                    "graph": get_graph("md-scatter"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -130,6 +115,7 @@ json_data = {
                 "size": "xlarge",
                 "type": "xl-scatter",
                 "config": {
+                    "graph": get_graph("xl-scatter"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]
@@ -138,12 +124,14 @@ json_data = {
                 "size": "medium",
                 "type": "md-scatter",
                 "config": {
+                    "graph": get_graph("md-scatter"),
                     "backgroundColor": "#E2D5E6"
                 }
             }, {
                 "size": "large",
                 "type": "lg-scatter",
                 "config": {
+                    "graph": get_graph("lg-scatter"),
                     "backgroundColor": "#E2D5E6"
                 }
             }]

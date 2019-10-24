@@ -13,7 +13,7 @@ class Widget(__Widget):
             go.Bar(
                 x=data['x'],
                 y=data['y'],
-                name=data['name'] if data['name'] else data['name'],
+                name=data['name'] if data['name'] else '',
                 marker=go.bar.Marker(
                     color=data['color'] if data['color'] else 'rgb(%s, %s, %s)' % (
                         random.randint(0, 255),
@@ -31,6 +31,8 @@ class Widget(__Widget):
                 layout=self.get_layout()
             ),
             style={
-                'height': '200px'
-            }
+                'width': '300px',
+                'height': '220px'
+            },
+            className='m-auto'
         )
