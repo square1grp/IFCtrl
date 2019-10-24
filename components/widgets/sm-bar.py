@@ -6,6 +6,7 @@ import random
 
 class Widget(__Widget):
 
+    # generate data for bar chart
     def get_data(self):
         data_arr = self.config['graph']['data']
 
@@ -24,6 +25,7 @@ class Widget(__Widget):
             ) for data in data_arr
         ]
 
+    # return bar chart
     def get_content(self):
         return dcc.Graph(
             figure=go.Figure(

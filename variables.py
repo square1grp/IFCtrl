@@ -46,8 +46,8 @@ def get_graph(graph_type):
     if "scatter" in graph_type:
         return {
             'data': [{
-                'x': [i+1 for i in range(10)],
-                'y': [random.randint(1, 100) for i in range(10)],
+                'x': [i+1 for i in range(15)],
+                'y': [random.randint(50, 200) for i in range(15)],
                 'mode': 'lines+markers',  # 'lines', 'markers', 'lines+markers'
                 'name': 'City',
                 'color': 'rgb(%s, %s, %s)' % (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))

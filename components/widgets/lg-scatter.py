@@ -6,6 +6,7 @@ import random
 
 class Widget(__Widget):
 
+    # generate scatter chart data
     def get_data(self):
         data_arr = self.config['graph']['data']
 
@@ -25,6 +26,7 @@ class Widget(__Widget):
             ) for data in data_arr
         ]
 
+    # return scatter chart
     def get_content(self):
         return dcc.Graph(
             figure=go.Figure(
