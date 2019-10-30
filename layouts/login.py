@@ -54,9 +54,7 @@ layout = dbc.Row(
         )
     ],
     align='center',
-    style={
-        'height': '100vh'
-    }
+    className="height-100vh"
 )
 
 

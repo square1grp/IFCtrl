@@ -20,8 +20,5 @@ layout = dbc.Col(
             className="px-md-0 px-lg-3"
         )
     ],
-    style={
-        'backgroundColor': colors['green']
-    },
-    className='col-12 col-md-3'
+    className='col-12 col-md-3 bg-green'
 )

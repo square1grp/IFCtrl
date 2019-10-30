@@ -51,8 +51,7 @@ class __Widget:
     def get_content(self):
         return html.Div(
             style={
-                'height': '100%',
-                'minHeight': '%spx' % (200 if self.is_child_widget else 410),
                 'backgroundColor': self.config['backgroundColor']
-            }
+            },
+            className='blank-widget %s' % ('child-widget' if self.is_child_widget else '')
         )

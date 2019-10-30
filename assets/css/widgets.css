@@ -1,0 +1,13 @@
+.blank-widget {
+    height: 100%;
+    min-height: 410px;
+}
+
+.blank-widget.child-widget {
+    min-height: 200px;
+}
+
+.sm-bar {
+    width: 300px;
+    height: 220px;
+}

@@ -48,7 +48,7 @@ def check_local_storage(ts, local_storage):
 @app.callback(Output('local_storage', 'data'),
               [Input('page_url', 'pathname')])
 def store_user_token(pathname):
-    if pathname is '/logout':
+    if pathname == '/logout':
         return {'token': None}
     elif pathname:
         return {'token': cur_user.get_token()}

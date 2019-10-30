@@ -12,9 +12,5 @@ layout = dbc.Row(
             xs=12
         )
     ],
-    style={
-        'backgroundColor': colors['beige'],
-        'color': colors['black']
-    },
-    className='text-center'
+    className='text-center bg-beige col-black'
 )

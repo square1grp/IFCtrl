@@ -32,9 +32,5 @@ class Widget(__Widget):
                 data=self.get_data(),
                 layout=self.get_layout()
             ),
-            style={
-                'width': '300px',
-                'height': '220px'
-            },
-            className='m-auto'
+            className='m-auto sm-bar'
         )

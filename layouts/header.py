@@ -26,11 +26,7 @@ layout = dbc.Row(
             xs=12
         )
     ],
-    style={
-        'backgroundColor': colors['black'],
-        'color': colors['white']
-    },
-    className='text-center'
+    className='text-center bg-black col-white'
 )
 
 # log out callback

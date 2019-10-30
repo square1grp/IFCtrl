@@ -1,5 +1,34 @@
 @import './navigation.css';
+@import './widgets.css';
 
 #page-content {
     min-height: 100vh;
+}
+
+.bg-black {
+    background-color: #000000;
+}
+
+.bg-green {
+    background-color: #D4E8D5;
+}
+
+.bg-beige {
+    background-color: #F5F5DC;
+}
+
+.bg-blue {
+    background-color: #D8EAFA;
+}
+
+.col-black {
+    color: #000000;
+}
+
+.col-white {
+    color: #FFFFFF;
+}
+
+.height-100vh {
+    height: 100vh;
 }
