@@ -15,7 +15,7 @@ def get_widget_board(widgets):
             for idx, child_widget in enumerate(widget['children'], start=1):
                 Widget = getattr(import_module('components.widgets.%s' % child_widget['type']), 'Widget')
 
-                ele_widget = Widget(child_widget['config'], True)
+                ele_widget = Widget(child_widget['config'], child_widget['type'], True)
 
                 mirror_children.append(
                     dbc.Col(
@@ -38,7 +38,7 @@ def get_widget_board(widgets):
         # widget which is not mirror layouted
         else:
             Widget = getattr(import_module('components.widgets.%s' % widget['type']), 'Widget')
-            ele_widget = Widget(widget['config'])
+            ele_widget = Widget(widget['config'], widget['type'])
 
             children.append(
                 dbc.Col(

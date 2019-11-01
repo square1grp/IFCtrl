@@ -10,52 +10,6 @@ colors = {
     "purple":   "#E2D5E6"
 }
 
-
-# create mockup data
-def get_graph(graph_type):
-    layout = {
-        'title': {
-            'text': 'US City',
-            'pos_x': 0.5,
-            'pos_y': 0.9
-        },
-        'showLegend': True,
-        'legend': {
-            'pos_x': 0,
-            'pos_y': 1.0
-        },
-        'margin': {
-            'left': 30,
-            'right': 10,
-            'top': 50,
-            'bottom': 30
-        }
-    }
-
-    if "bar" in graph_type:
-        return {
-            'data': [{
-                'x': ['Los Angeles', 'Washington', 'Las Vegas'],
-                'y': [random.randint(1, 5) for i in range(3)],
-                'name': 'City',
-                'color': 'rgb(%s, %s, %s)' % (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-            }],
-            'layout': layout
-        }
-
-    if "scatter" in graph_type:
-        return {
-            'data': [{
-                'x': [i+1 for i in range(15)],
-                'y': [random.randint(50, 200) for i in range(15)],
-                'mode': 'lines+markers',  # 'lines', 'markers', 'lines+markers'
-                'name': 'City',
-                'color': 'rgb(%s, %s, %s)' % (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-            } for j in range(2)],
-            'layout': layout
-        }
-
-
 json_data = {
     "nav": [{
         "label": "Page Nav Item 1",
@@ -80,59 +34,59 @@ json_data = {
         "content-type": "widget-board",
         "config": [{
             "widgets": [{
-                "size": "medium",
-                "layout": "mirror",
-                "children": [{
-                    "type": "sm-bar",
-                    "config": {
-                        "graph": get_graph("sm-bar"),
-                        "backgroundColor": "#E2D5E6"
-                    }
-                }, {
-                    "type": "sm-bar",
-                    "config": {
-                        "graph": get_graph("sm-bar"),
-                        "backgroundColor": "#E2D5E6"
-                    }
-                }]
-            }, {
-                "size": "medium",
-                "type": "md-scatter",
-                "config": {
-                    "graph": get_graph("md-scatter"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }, {
-                "size": "medium",
-                "type": "md-scatter",
-                "config": {
-                    "graph": get_graph("md-scatter"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
                 "size": "xlarge",
-                "type": "xl-scatter",
+                "type": "xl-bar",
                 "config": {
-                    "graph": get_graph("xl-scatter"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }]
-        }, {
-            "widgets": [{
-                "size": "medium",
-                "type": "md-scatter",
-                "config": {
-                    "graph": get_graph("md-scatter"),
-                    "backgroundColor": "#E2D5E6"
-                }
-            }, {
-                "size": "large",
-                "type": "lg-scatter",
-                "config": {
-                    "graph": get_graph("lg-scatter"),
-                    "backgroundColor": "#E2D5E6"
+                    "title": {
+                        "text": "Production Volume Trend",
+                        "transform": "uppercase",
+                    },
+                    "graph": {
+                        "data": [{
+                            "x": ["4/%s" % date for date in range(1, 32)],
+                            "y": [value if value>10000 else 0 for value in [random.randint(5000, 30000) for i in range(31)]],
+                            "marker": {
+                                "colorscale": [
+                                    [0.0, "#AAAAFF"],
+                                    [0.3, "#8989FF"],
+                                    [0.7, "#0101FF"],
+                                    [1.0, "#0000FF"]
+                                ],
+                                "line_color": "#009900",
+                                "line_width": 1.5,
+                                "showscale": True,
+                                "colorbar": {
+                                    "len": 1.1,
+                                    "tickvals": [5000, 10000, 15000, 20000, 25000],
+                                    "ticktext": ["5,000", "10,000", "15,000", "20,000", "25,000"],
+                                    "outlinewidth": 0
+                                }
+                            }
+                        }],
+                        "layout": {
+                            "showlegend": False,
+                            "xaxis": {
+                                "tickvals": ["4/%s" % date for date in range(1, 32) if date%3 == 0],
+                                "tickfont_color": "#000000",
+                                "showgrid": True,
+                                "zeroline": True,
+                                "gridcolor": "#5F5F5F",
+                                "showline": True,
+                                "linewidth": 2,
+                                "linecolor": "#5F5F5F"
+                            },
+                            "yaxis": {
+                                "title": "Gallons Produced",
+                                "title_font_color": "#000000",
+                                "ticktext": ['10,000', '20,000', '30,000'],
+                                "tickvals": [10000, 20000, 30000],
+                                "tickfont_color": "#000000",
+                                "showgrid": True,
+                                "gridcolor": "#5F5F5F",
+                                "showline": False
+                            }
+                        }
+                    }
                 }
             }]
         }]

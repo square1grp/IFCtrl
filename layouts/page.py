@@ -27,7 +27,7 @@ def display_page(pathname):
     if pathname is not None:
         slug = pathname.replace('/', '')
 
-    slug = slug if slug else 'page-1'
+    slug = slug if slug else json_data['pages'][0]['slug']
 
     """ Find page object matched with the slug """
     page = [page for page in json_data['pages'] if page['slug'] == slug][0]

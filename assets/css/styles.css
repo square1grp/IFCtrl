@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 @import './navigation.css';
 @import './widgets.css';
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
 
 #page-content {
     min-height: 100vh;
@@ -31,4 +36,8 @@
 
 .height-100vh {
     height: 100vh;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
 }

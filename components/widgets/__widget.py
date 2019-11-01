@@ -1,57 +1,91 @@
 from variables import colors
 import dash_html_components as html
+import dash_core_components as dcc
+import dash_bootstrap_components as dbc
 import plotly.graph_objs as go
 
 
 # widget abstract class
 class __Widget:
     is_child_widget = False
-    config = {
-        'backgroundColor': colors['purple']
-    }
+    widget_type = None
 
     # set config
-    def __init__(self, config, is_child_widget=False):
+    def __init__(self, config, widget_type, is_child_widget=False):
         self.config = config
+        self.widget_type = widget_type
         self.is_child_widget = is_child_widget
+    
+    # get keys of graph_obj
+    def get_attr_key_list(self, attr_type):
+        if 'bar' in self.widget_type:
+            if attr_type == 'layout':
+                return ['title', 'xaxis', 'yaxis', 'showlegend']
+            elif attr_type == 'marker':
+                return ['colorscale', 'line_color', 'line_width', 'showscale', 'colorbar']
+    
+        return []
+    
+    # get marker
+    def get_marker(self, data):
+        go_marker = dict()
+
+        if 'marker' not in data:
+            return go_marker
+        
+        if 'colorscale' in data['marker']:
+            go_marker['color'] = data['y']
+        
+        for key in self.get_attr_key_list('marker'):
+            if key in data['marker']:
+                go_marker[key] = data['marker'][key]
+        
+        return go_marker
+        
+    # get title area
+    def get_title(self, title):
+        return html.Div(
+            html.H4(title['text'] if 'text' in title else ''),
+            className='title %s' % ('text-%s' % title['transform']) if 'transform' in title else None
+        )
 
     # return graph data
     def get_data(self):
-        return self.config['graph']['data']
+        return None
 
     # return graph layout
     def get_layout(self):
         layout = self.config['graph']['layout']
 
-        return go.Layout(
-            # title position, text
-            title=go.layout.Title(
-                text=layout['title']['text'] if layout['title']['text'] else '',
-                x=layout['title']['pos_x'] if layout['title']['pos_x'] else 0.5,
-                y=layout['title']['pos_y'] if layout['title']['pos_y'] else 0.9
-            ),
-            # legend configuration
-            showlegend=True if layout['showLegend'] else False,
-            # legend position
-            legend=go.layout.Legend(
-                x=layout['legend']['pos_x'] if layout['legend']['pos_x'] else 0,
-                y=layout['legend']['pos_y'] if layout['legend']['pos_y'] else 1.0,
-            ),
-            # margins
-            margin=go.layout.Margin(
-                l=layout['margin']['left'] if layout['margin']['left'] else 30,
-                r=layout['margin']['right'] if layout['margin']['right'] else 10,
-                t=layout['margin']['top'] if layout['margin']['top'] else 10,
-                b=layout['margin']['bottom'] if layout['margin']['bottom'] else 30
-            )
-        )
+        go_layout = dict()
+
+        for key in self.get_attr_key_list('layout'):
+            if key in layout:
+                go_layout[key] = layout[key]
+
+        go_layout['paper_bgcolor'] = 'rgba(0,0,0,0)'
+        go_layout['plot_bgcolor'] = 'rgba(0,0,0,0)'
+        return go_layout
 
     # content which draws a widget
     # default: colored rect range 
     def get_content(self):
+        widget_content = []
+
+        if 'title' in self.config:
+            widget_content.append(self.get_title(self.config['title']))
+        
+        widget_content.append(
+            dcc.Graph(
+                figure=go.Figure(
+                    data=self.get_data(),
+                    layout=self.get_layout()
+                ),
+                className='m-auto'
+            )
+        )
+
         return html.Div(
-            style={
-                'backgroundColor': self.config['backgroundColor']
-            },
-            className='blank-widget %s' % ('child-widget' if self.is_child_widget else '')
+            widget_content,
+            className='widget'
         )
