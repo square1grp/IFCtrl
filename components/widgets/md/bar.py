@@ -1,9 +1,9 @@
-from .__widget import __Widget
+from ..__widget import __Widget
 import plotly.graph_objs as go
 import dash_core_components as dcc
 
 
-class Widget(__Widget):    
+class Widget(__Widget):
     # get data marker
     def get_data_marker(self, data, marker_props):
         go_marker = dict()

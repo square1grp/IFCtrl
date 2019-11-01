@@ -1,4 +1,4 @@
-import random
+from random import randint, random, uniform
 
 colors = {
     "black":    "#000000",
@@ -44,7 +44,7 @@ json_data = {
                     "graph": {
                         "data": [{
                             "x": ["4/%s" % date for date in range(1, 32)],
-                            "y": [value if value>10000 else 0 for value in [random.randint(5000, 30000) for i in range(31)]],
+                            "y": [value if value>10000 else 0 for value in [randint(5000, 30000) for i in range(31)]],
                             "marker": {
                                 "colorscale": [
                                     [0.0, "#AAAAFF"],
@@ -78,12 +78,65 @@ json_data = {
                             "yaxis": {
                                 "title": "Gallons Produced",
                                 "title_font_color": "#000000",
-                                "ticktext": ['10,000', '20,000', '30,000'],
-                                "tickvals": [10000, 20000, 30000],
+                                "ticktext": ['0', '10,000', '20,000', '30,000'],
+                                "tickvals": [0, 10000, 20000, 30000],
                                 "tickfont_color": "#000000",
                                 "showgrid": True,
                                 "gridcolor": "#5F5F5F",
                                 "showline": False
+                            }
+                        }
+                    }
+                }
+            }]
+        }, {
+            "widgets":[{
+                "size": "medium",
+                "type": "md-scatter",
+                "config": {
+                    "title": {
+                        "text": "TMP Daily Range",
+                        "transform": "uppercase"
+                    },
+                    "graph": {
+                        "data": [{
+                            "x": ["4/%s" % date for date in range(1, 32)],
+                            "y": [uniform(0.3, 1) for i in range(31)],
+                            "line": {
+                                "color": "#FF0000"
+                            }
+                        }, {
+                            "x": ["4/%s" % date for date in range(1, 32)],
+                            "y": [uniform(-0.3, 0) for i in range(31)],
+                            "fill": "tonexty",
+                            "line": {
+                                "color": "#FF9A00"
+                            }
+                        }],
+                        "show_average": True,
+                        "layout": {
+                            "showlegend": False,
+                            "xaxis": {
+                                "tickvals": ["4/%s" % date for date in range(1, 32) if date%7 == 1],
+                                "tickfont_color": "#000000",
+                                "showgrid": True,
+                                "zeroline": True,
+                                "gridcolor": "#5F5F5F",
+                                "showline": True,
+                                "linewidth": 2,
+                                "linecolor": "#5F5F5F"
+                            },
+                            "yaxis": {
+                                "title": "Bar",
+                                "tickvals": [-0.5, 0, 0.5, 1],
+                                "ticktext": ['-0.5', '0', '0.5', '1.0'],
+                                "tick0": -0.5,
+                                "tickfont_color": "#000000",
+                                "showgrid": True,
+                                "gridcolor": "#5F5F5F",
+                                "showline": False,
+                                "zerolinecolor": "#5F5F5F",
+                                "zerolinewidth": 1
                             }
                         }
                     }

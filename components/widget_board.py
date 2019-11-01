@@ -2,6 +2,18 @@ import dash_bootstrap_components as dbc
 import dash_html_components as html
 from importlib import import_module
 
+# get class names
+def get_classNames(size):
+    if size == "xlarge":
+        return None
+    
+    if size == "large":
+        return 'col-xl-9'
+    
+    if size == "medium":
+        return 'col-xl-6 col-lg-8'
+    
+    return 'col-xl-3 col-lg-4 col-md-6'
 
 # create wdiget board
 def get_widget_board(widgets):
@@ -13,7 +25,7 @@ def get_widget_board(widgets):
             mirror_children = []
 
             for idx, child_widget in enumerate(widget['children'], start=1):
-                Widget = getattr(import_module('components.widgets.%s' % child_widget['type']), 'Widget')
+                Widget = getattr(import_module('components.widgets.%s' % child_widget['type'].replace('-', '.')), 'Widget')
 
                 ele_widget = Widget(child_widget['config'], child_widget['type'], True)
 
@@ -31,20 +43,18 @@ def get_widget_board(widgets):
                         mirror_children,
                         className='mx-auto'
                     ),
-                    className='col-12 %s mb-2 widget-container p-md-1'
-                    % ('col-md-4' if widget['size'] == 'medium' else ('col-md-8' if widget['size'] == 'large' else ''))
+                    className='col-12 mb-2 widget-container p-md-1 %s' % get_classNames(widget['size'])
                 )
             )
         # widget which is not mirror layouted
         else:
-            Widget = getattr(import_module('components.widgets.%s' % widget['type']), 'Widget')
+            Widget = getattr(import_module('components.widgets.%s' % widget['type'].replace('-', '.')), 'Widget')
             ele_widget = Widget(widget['config'], widget['type'])
 
             children.append(
                 dbc.Col(
                     ele_widget.get_content(),
-                    className='col-12 %s mb-2 widget-container p-md-1'
-                    % ('col-md-4' if widget['size'] == 'medium' else ('col-md-8' if widget['size'] == 'large' else ''))
+                    className='col-12 mb-2 widget-container p-md-1 %s' % get_classNames(widget['size'])
                 )
             )
 

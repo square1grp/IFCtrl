@@ -12,5 +12,5 @@ layout = dbc.Col(
             className="p-3"
         )
     ),
-    className='col-12 col-md-6 mx-md-auto bg-blue'
+    className='col-12 col-md-9 col-xl-6 mx-md-auto bg-blue'
 )

@@ -57,5 +57,5 @@ class __Widget:
 
         return html.Div(
             widget_content,
-            className='widget'
+            className='widget %s' % (self.widget_type)
         )

@@ -22,7 +22,7 @@
 }
 
 @media (min-width: 1200px) {
-    .widget .title {
+    .widget[class*="xl-"] .title {
         position: absolute;
     }
 }
