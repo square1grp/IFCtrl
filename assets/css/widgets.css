@@ -7,7 +7,6 @@
 }
 
 .widget .title {
-    position: absolute;
     padding: 8px 15px 10px;
     border-bottom: 2px solid #DD2C00;
     width: 100%;
@@ -20,4 +19,10 @@
 
 .widget .modebar .modebar-group {
     height: 28px;
+}
+
+@media (min-width: 1200px) {
+    .widget .title {
+        position: absolute;
+    }
 }
