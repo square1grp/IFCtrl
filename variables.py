@@ -141,6 +141,34 @@ json_data = {
                         }
                     }
                 }
+            }, {
+                "size": "medium",
+                "type": "md-pie",
+                "config": {
+                    "title": {
+                        "text": "High Frequency Cleans",
+                        "transform": "uppercase"
+                    },
+                    "graph": {
+                        "data": [{
+                            "labels": ["4/%s" % date for date in range(1, 32) if date%5 == 1],
+                            "values": [randint(1, 40) for i in range(6)],
+                             "marker": {
+                                "colors": [
+                                    "#4747FF",
+                                    "#00AC00",
+                                    "#00D900",
+                                    "#AC5F00",
+                                    "#FFAC47",
+                                    "#FF8C00"
+                                ]
+                            }
+                        }],
+                        "layout": {
+                            "showlegend": False,
+                        }
+                    }
+                }
             }]
         }]
     }]

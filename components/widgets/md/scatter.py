@@ -37,7 +37,7 @@ class Widget(__Widget):
         ]
     
     # additional layout options
-    def get_margin(self):
+    def get_layout_options(self):
         return dict(
             margin=dict(b=30, t=40, r=30)
         )
@@ -48,7 +48,7 @@ class Widget(__Widget):
             dcc.Graph(
                 figure=go.Figure(
                     data=self.get_graph_data(),
-                    layout=self.get_graph_layout(self.get_margin())
+                    layout=self.get_graph_layout(self.get_layout_options())
                 ),
                 className='m-auto'
             )
