@@ -1,8 +1,4 @@
-from variables import colors
 import dash_html_components as html
-import dash_core_components as dcc
-import dash_bootstrap_components as dbc
-import plotly.graph_objs as go
 
 
 # widget abstract class
@@ -22,14 +18,14 @@ class __Widget:
 
         if 'marker' not in data:
             return go_marker
-        
+
         for prop in marker_props:
             if prop in data['marker']:
                 go_marker[prop] = data['marker'][prop]
-        
+
                 if prop == 'colorscale' and color_key in data:
                     go_marker['color'] = data[color_key]
-        
+
         return go_marker
 
     # return graph layout
@@ -45,18 +41,21 @@ class __Widget:
         go_layout['paper_bgcolor'] = 'rgba(0,0,0,0)'
         go_layout['plot_bgcolor'] = 'rgba(0,0,0,0)'
 
-        if 'xl-' not in self.widget_type:
-            go_layout['height'] = 250
+        go_layout['height'] = 300 if 'xl-' in self.widget_type else 250
+        go_layout['margin'] = dict(b=40, t=40, r=30)
 
         go_layout.update(options)
 
         return go_layout
-        
+
     # get title area
     def get_widget_title(self, title):
         return html.Div(
             html.H4(title['text'] if 'text' in title else ''),
-            className='title %s' % (('text-%s' % title['transform']) if 'transform' in title else '')
+            className='title %s' % (
+                ('text-%s' % title['transform']) if 'transform' in title
+                else ''
+            )
         )
 
     # get graph in the current widget
@@ -64,13 +63,13 @@ class __Widget:
         return []
 
     # content which draws a widget
-    # default: colored rect range 
+    # default: colored rect range
     def get_content(self):
         widget_content = []
 
         if 'title' in self.config:
             widget_content.append(self.get_widget_title(self.config['title']))
-        
+
         for graph in self.get_widget_graph():
             widget_content.append(graph)
 

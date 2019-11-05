@@ -1,4 +1,4 @@
-from random import randint, random, uniform
+from random import randint, uniform
 
 colors = {
     "black":    "#000000",
@@ -44,7 +44,7 @@ json_data = {
                     "graph": {
                         "data": [{
                             "x": ["4/%s" % date for date in range(1, 32)],
-                            "y": [value if value>10000 else 0 for value in [randint(5000, 30000) for i in range(31)]],
+                            "y": [value if value > 10000 else 0 for value in [randint(5000, 30000) for i in range(31)]],
                             "marker": {
                                 "colorscale": [
                                     [0.0, "#AAAAFF"],
@@ -66,7 +66,6 @@ json_data = {
                         "layout": {
                             "showlegend": False,
                             "xaxis": {
-                                "tickvals": ["4/%s" % date for date in range(1, 32) if date%3 == 0],
                                 "tickfont_color": "#000000",
                                 "showgrid": True,
                                 "zeroline": True,
@@ -90,7 +89,7 @@ json_data = {
                 }
             }]
         }, {
-            "widgets":[{
+            "widgets": [{
                 "size": "medium",
                 "type": "md-scatter",
                 "config": {
@@ -117,7 +116,7 @@ json_data = {
                         "layout": {
                             "showlegend": False,
                             "xaxis": {
-                                "tickvals": ["4/%s" % date for date in range(1, 32) if date%7 == 1],
+                                "tickvals": ["4/%s" % date for date in range(1, 32) if date % 7 == 1],
                                 "tickfont_color": "#000000",
                                 "showgrid": True,
                                 "zeroline": True,
@@ -151,9 +150,9 @@ json_data = {
                     },
                     "graph": {
                         "data": [{
-                            "labels": ["4/%s" % date for date in range(1, 32) if date%5 == 1],
+                            "labels": ["4/%s" % date for date in range(1, 32) if date % 5 == 1],
                             "values": [randint(1, 40) for i in range(6)],
-                             "marker": {
+                            "marker": {
                                 "colors": [
                                     "#4747FF",
                                     "#00AC00",
@@ -168,6 +167,18 @@ json_data = {
                             "showlegend": False,
                         }
                     }
+                }
+            }]
+        }, {
+            "widgets": [{
+                "size": "xlarge",
+                "type": "xl-gauge",
+                "config": {
+                    "title": {
+                        "text": "Baseline Comparison",
+                        "transform": "uppercase"
+                    },
+                    "graph": {}
                 }
             }]
         }]

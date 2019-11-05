@@ -4,6 +4,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 
+
 class Widget(__Widget):
     # get graph data
     def get_graph_data(self, device=None):
@@ -11,21 +12,21 @@ class Widget(__Widget):
 
         if not len(data_arr):
             return []
-        
+
         return [go.Pie(
             labels=data_arr[0]['labels'],
             values=data_arr[0]['values'],
             marker=self.get_data_marker(data_arr[0], ['colors']),
             textinfo='none',
-            hole=0.5 if device=='mobile' else None
+            hole=0.5 if device == 'mobile' else None
         )]
-    
+
     # more layout options
     def get_layout_options(self):
         return dict(
             margin=dict(b=15, t=15, r=15, l=15)
         )
-    
+
     # add total to the center of the chart
     def get_layout_mobile_options(self, total_text):
         return dict(
@@ -61,7 +62,8 @@ class Widget(__Widget):
                         dcc.Graph(
                             figure=go.Figure(
                                 data=self.get_graph_data(),
-                                layout=self.get_graph_layout(self.get_layout_options())
+                                layout=self.get_graph_layout(
+                                    self.get_layout_options())
                             ),
                             className='m-auto'
                         ),
@@ -86,7 +88,8 @@ class Widget(__Widget):
             dcc.Graph(
                 figure=go.Figure(
                     data=self.get_graph_data('mobile'),
-                    layout=self.get_graph_layout(self.get_layout_mobile_options(total_text))
+                    layout=self.get_graph_layout(
+                        self.get_layout_mobile_options(total_text))
                 ),
                 className='m-auto d-md-none'
             )

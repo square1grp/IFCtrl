@@ -20,9 +20,3 @@
 .widget .modebar .modebar-group {
     height: 28px;
 }
-
-@media (min-width: 1200px) {
-    .widget[class*="xl-"] .title {
-        position: absolute;
-    }
-}

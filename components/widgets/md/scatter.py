@@ -2,13 +2,15 @@ from ..__widget import __Widget
 import plotly.graph_objs as go
 import dash_core_components as dcc
 
+
 class Widget(__Widget):
-    
+
     # get average
     def get_average_data(self, data1, data2):
         return dict(
             x=data1['x'],
-            y=[(data1['y'][i] + data2['y'][i])/2 for i in range(len(data1['x']))],
+            y=[(data1['y'][i] + data2['y'][i]) /
+                2 for i in range(len(data1['x']))],
             mode='markers',
             marker=dict(color='#FF8C00', size=8)
         )
@@ -21,7 +23,8 @@ class Widget(__Widget):
                 self.config['graph']['show_average'] and\
                 len(self.config['graph']['data']) == 2:
 
-            avg_data = self.get_average_data(self.config['graph']['data'][0], self.config['graph']['data'][1])
+            avg_data = self.get_average_data(
+                self.config['graph']['data'][0], self.config['graph']['data'][1])
             data_arr.append(avg_data)
 
         return [
@@ -35,7 +38,7 @@ class Widget(__Widget):
                 marker=data['marker'] if 'marker' in data else dict()
             ) for data in data_arr
         ]
-    
+
     # additional layout options
     def get_layout_options(self):
         return dict(
