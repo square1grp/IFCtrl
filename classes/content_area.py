@@ -1,8 +1,5 @@
 from components.widget_board import get_widget_board
 
-import dash_bootstrap_components as dbc
-import dash_html_components as html
-
 
 # content area class
 # this class manages the content(widget-board/report)

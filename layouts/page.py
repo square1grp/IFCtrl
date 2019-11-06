@@ -36,7 +36,6 @@ def display_page(pathname):
     if page is None:
         return html.Div(['Not Found'])
 
-
     content_area = ContentArea(page)
 
     return content_area.get_content()

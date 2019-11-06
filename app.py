@@ -61,7 +61,7 @@ def display_page(pathname):
     if pathname == '/logout':
         cur_user.user_logout()
         dcc.Location(pathname='/login', id='redirect_to_login')
-    
+
     # check if the current page is login page or user is not logged in
     # if yes, show login page
     if pathname == '/login' and not cur_user.is_user_logged_in():

@@ -9,13 +9,13 @@ class User:
 
     @staticmethod
     def get_instance():
-        if User.__instance == None:
+        if User.__instance is None:
             User()
 
         return User.__instance
 
     def __init__(self):
-        if User.__instance == None:
+        if User.__instance is None:
             User.__instance = self
 
     # set user token

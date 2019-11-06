@@ -1,8 +1,6 @@
-import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
-from variables import colors
 from classes.User import User
 from server import app
 
