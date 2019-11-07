@@ -5,7 +5,7 @@ from dash.exceptions import PreventUpdate
 from dash.dependencies import Input, Output, State
 from server import app
 from classes.User import User
-from layouts import login, page
+from layouts import page
 import config
 
 # get the current user instance

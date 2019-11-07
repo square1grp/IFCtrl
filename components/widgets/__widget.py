@@ -30,7 +30,10 @@ class __Widget:
 
     # return graph layout
     def get_graph_layout(self, options=dict()):
-        layout = self.config['graph']['layout']
+        try:
+            layout = self.config['graph']['layout']
+        except:
+            layout = dict()
 
         go_layout = dict()
 
