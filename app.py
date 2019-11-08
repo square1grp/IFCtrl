@@ -5,7 +5,7 @@ from dash.exceptions import PreventUpdate
 from dash.dependencies import Input, Output, State
 from server import app
 from classes.User import User
-from layouts import page
+from layouts import page, login
 import config
 
 # get the current user instance
@@ -48,8 +48,8 @@ def check_local_storage(ts, local_storage):
 @app.callback(Output('local_storage', 'data'),
               [Input('page_url', 'pathname')])
 def store_user_token(pathname):
-    if pathname == '/logout':
-        return {'token': None}
+    if pathname == '/logout' or not cur_user.is_user_logged_in():
+        return {}
     elif pathname:
         return {'token': cur_user.get_token()}
 
@@ -65,7 +65,7 @@ def display_page(pathname):
     # if page is not login page and user is not logged in,
     # redriect to login page
     if not cur_user.is_user_logged_in():
-        return dcc.Location(pathname='/login', id='redirect_to_login')
+        return login.layout
     elif pathname == '/login':
         return dcc.Location(pathname='/', id='redirect_to_login')
 
