@@ -5,19 +5,29 @@ from dash.dependencies import Input, Output
 from classes.content_area import ContentArea
 from layouts import header, control, navigation, content
 from server import app
-from variables import json_data
+from classes.User import User
 
-# create page layout
-layout = [
-    header.layout,
-    control.layout,
-    dbc.Row([
-        dcc.Location(id='dashboard_url', refresh=False),
-        navigation.layout,
-        content.layout,
-        dbc.Col(className='col-3 d-none d-xl-block')
-    ])
-]
+
+# get the current user instance
+cur_user = User.get_instance()
+
+
+def get_layout():
+    nav_items = cur_user.get_page_nav_items()
+
+    # create page layout
+    layout = [
+        header.layout,
+        control.layout,
+        dbc.Row([
+            dcc.Location(id='dashboard_url', refresh=False),
+            navigation.get_layout(nav_items),
+            content.layout,
+            dbc.Col(className='col-3 d-none d-xl-block')
+        ])
+    ]
+
+    return layout
 
 # show correct page content by the current url
 @app.callback(Output('content-area', 'children'),
@@ -27,10 +37,14 @@ def display_page(pathname):
     if pathname is not None:
         slug = pathname.replace('/', '')
 
-    slug = slug if slug else json_data['pages'][0]['slug']
+    page_items = cur_user.get_page_items()
+    if not len(page_items):
+        return html.Div()
+
+    slug = slug if slug else page_items[0]['slug']
 
     """ Find page object matched with the slug """
-    page = [page for page in json_data['pages'] if page['slug'] == slug][0]
+    page = [page for page in page_items if page['slug'] == slug][0]
 
     """ If page is not found, show Not Found. """
     if page is None:

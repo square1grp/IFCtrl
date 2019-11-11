@@ -7,6 +7,8 @@ import dash_html_components as html
 
 class Widget(__Widget):
     def get_widget_graph(self):
+        return dbc.Row()
+
         data_arr = self.config['graph']['data']
 
         figs = [go.Figure(

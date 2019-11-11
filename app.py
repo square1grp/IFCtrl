@@ -35,11 +35,12 @@ def check_local_storage(ts, local_storage):
     if ts is None:
         PreventUpdate
 
-    local_storage = local_storage or {'token': None}
+    local_storage = local_storage or {'token': None, 'user_data': dict()}
     token = local_storage.get('token')
+    user_data = local_storage.get('user_data')
 
-    if token:
-        cur_user.set_token(token)
+    if token and user_data:
+        cur_user.set_token(token, user_data)
 
     return 'Yes'
 
@@ -51,7 +52,7 @@ def store_user_token(pathname):
     if pathname == '/logout' or not cur_user.is_user_logged_in():
         return {}
     elif pathname:
-        return {'token': cur_user.get_token()}
+        return {'token': cur_user.get_token(), 'user_data': cur_user.get_user_data()}
 
 
 # callbacks, show page content under correct page urls
@@ -64,13 +65,13 @@ def display_page(pathname):
 
     # if page is not login page and user is not logged in,
     # redriect to login page
-    if not cur_user.is_user_logged_in():
+    if pathname == '/login' and not cur_user.is_user_logged_in():
         return login.layout
-    elif pathname == '/login':
-        return dcc.Location(pathname='/', id='redirect_to_login')
+    elif not cur_user.is_user_logged_in():
+        return dcc.Location(pathname='/login', id='redirect_to_login')
 
     # show pages
-    return page.layout
+    return page.get_layout()
 
 
 # run the server
