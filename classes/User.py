@@ -1,5 +1,4 @@
 import base64
-from querymanager.intelliflux_querymanager import IntelliFluxQueryManager
 from querymanager.intelliflux_dashboard_api_consumer import *
 
 
