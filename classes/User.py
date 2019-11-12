@@ -1,5 +1,6 @@
-import requests
 import base64
+from querymanager.intelliflux_querymanager import IntelliFluxQueryManager
+from querymanager.intelliflux_dashboard_api_consumer import *
 
 
 # user class and it's singleton
@@ -35,19 +36,16 @@ class User:
 
     # user login. params: username, password
     def user_login(self, username, password):
-        response = requests.post('http://138.68.51.100/api/v1.0/login/',
-                                 json={'username': username, 'password': password})
-
-        if response.status_code == 200:
-            res_json = response.json()
-            if res_json['is_authenticated']:
+        user_data = authenticateUser(username, password)
+        print(user_data)
+        if user_data is not None:
+            if user_data['is_authenticated']:
                 # set token if user login is successed
                 data_str = '%s : %s' % (username, password)
                 token = base64.b64encode(data_str.encode('utf8'))
                 self.__token = str(token, "utf8")
                 self.__message = None
-                self.user_data = dict(databases=res_json['user_databases'],
-                                      config=res_json['user_info']['data_config'])
+                self.user_data = user_data
 
                 return True
 
@@ -61,11 +59,11 @@ class User:
 
     # get page navigations
     def get_page_nav_items(self):
-        return self.user_data['config']['nav']
+        return self.user_data['user_info']['data_config']['nav']
 
     # get page items
     def get_page_items(self):
-        return self.user_data['config']['pages']
+        return self.user_data['user_info']['data_config']['pages']
 
     # user log out
     def user_logout(self):
