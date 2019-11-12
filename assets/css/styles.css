@@ -37,3 +37,7 @@ body {
 .height-100vh {
     height: 100vh;
 }
+
+.min-250h {
+    min-height: 250px;
+}

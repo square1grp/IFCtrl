@@ -69,6 +69,8 @@ def display_page(pathname):
         return login.layout
     elif not cur_user.is_user_logged_in():
         return dcc.Location(pathname='/login', id='redirect_to_login')
+    elif pathname == '/login':
+        return dcc.Location(pathname='/', id='redirect_to_login')
 
     # show pages
     return page.get_layout()

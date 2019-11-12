@@ -42,7 +42,7 @@ class IntelliFluxQueryManager(object):
                     if time_stamp_from is not None and time_stamp_to is not None:
                         if time_stamp_from >= reference_df.time_stamp_from.item() and time_stamp_to <= reference_df.time_stamp_to.item():
                             widget_data = psql.sqldf(panda_Sql_query, locals())
-                            print(widget_data)
+                            # print(widget_data)
                         elif time_stamp_from > reference_df.time_stamp_to.item():
                             modified_query = replace_date_filters(
                                 sql_query, reference_df.time_stamp_to.item())
@@ -75,7 +75,7 @@ class IntelliFluxQueryManager(object):
     def loadMasterDataFrame(self):
         try:
             df = pd.read_pickle("master.pkl")
-            print(df)
+            # print(df)
             return df
         except (Exception) as error:
             print(error)

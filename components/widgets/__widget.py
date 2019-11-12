@@ -1,16 +1,25 @@
 import dash_html_components as html
+from querymanager.intelliflux_querymanager import IntelliFluxQueryManager
 
 
 # widget abstract class
 class __Widget:
     is_child_widget = False
     widget_type = None
+    widget_data = None
+    query_manager = None
 
     # set config
     def __init__(self, config, widget_type, is_child_widget=False):
         self.config = config
         self.widget_type = widget_type
         self.is_child_widget = is_child_widget
+        self.query_manager = IntelliFluxQueryManager()
+        self.fetch_widget_data()
+
+    # fetch widget data
+    def fetch_widget_data(self):
+        return {}
 
     # get marker options
     def get_data_marker(self, data=dict(), marker_props=[], color_key=None):

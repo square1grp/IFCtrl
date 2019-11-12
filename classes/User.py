@@ -20,6 +20,9 @@ class User:
         if User.__instance is None:
             User.__instance = self
 
+    def get_user_id(self):
+        return self.user_data['user_info']['id']
+
     # set user token
     def set_token(self, __token, user_data):
         self.__token = __token

@@ -1,11 +1,27 @@
 from ..__widget import __Widget
 import plotly.graph_objs as go
 import dash_core_components as dcc
+from classes.User import User
 
 
 class Widget(__Widget):
+    # get widget data via query manager
+    def fetch_widget_data(self):
+        cur_user = User.get_instance()
+        user_id = cur_user.get_user_id()
+        widget_name = 'user-%s-%s' % (user_id, self.widget_type)
+        time_stamp_from = '2019-10-01'
+        time_stamp_to = '2019-10-02'
+        database_id = 4
+        sql_query = 'SELECT t_stamp, name, value FROM data WHERE name=\'Permeability\' AND t_stamp BETWEEN \'2019-10-01 00:00:00\' AND \'2019-10-02 00:00:00\' ORDER BY t_stamp ASC'
+
+        self.widget_data = self.query_manager.getWidgetDataFromQueryManager(
+            widget_name, time_stamp_from, time_stamp_to, database_id, sql_query, user_id, True)
+
+        return self.widget_data
 
     # get average
+
     def get_average_data(self, data1, data2):
         return dict(
             x=data1['x'],
@@ -17,27 +33,15 @@ class Widget(__Widget):
 
     # generate data for bar chart
     def get_graph_data(self, marker_props=[]):
-        data_arr = self.config['graph']['data']
-
-        if 'show_average' in self.config['graph'] and\
-                self.config['graph']['show_average'] and\
-                len(self.config['graph']['data']) == 2:
-
-            avg_data = self.get_average_data(
-                self.config['graph']['data'][0], self.config['graph']['data'][1])
-            data_arr.append(avg_data)
-
-        return [
-            go.Scatter(
-                x=data['x'],
-                y=data['y'],
-                name=data['name'] if 'name' in data else None,
-                fill=data['fill'] if 'fill' in data else None,
-                mode=data['mode'] if 'mode' in data else 'lines',
-                line=data['line'] if 'line' in data else dict(),
-                marker=data['marker'] if 'marker' in data else dict()
-            ) for data in data_arr
-        ]
+        return [go.Scatter(
+            x=self.widget_data.t_stamp,
+            y=self.widget_data.value,
+            name=None,
+            fill=None,
+            mode='lines',
+            line=dict(),
+            marker=dict()
+        )]
 
     # additional layout options
     def get_layout_options(self):
