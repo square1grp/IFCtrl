@@ -1,78 +1,67 @@
+import flask
 import dash_html_components as html
-import dash_core_components as dcc
-import dash_bootstrap_components as dbc
-from dash.exceptions import PreventUpdate
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 from server import app
 from classes.User import User
 from layouts import page, login
 import config
+import json
 
 # get the current user instance
 cur_user = User.get_instance()
 
+# Create a login route
+@app.server.route('/login', methods=['POST'])
+def route_login():
+    data = flask.request.form
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        flask.abort(401)
+
+    # actual implementation should verify the password.
+    # Recommended to only keep a hash in database and use something like
+    # bcrypt to encrypt the password and check the hashed results.
+
+    # Return a redirect with
+    if cur_user.user_login(username, password):
+        rep = flask.redirect('/')
+
+        # Here we just store the given username in a cookie.
+        # Actual session cookies should be signed or use a JWT token.
+
+        user_data = cur_user.get_user_data()
+
+        rep.set_cookie('if-web-dashboard-session', json.dumps(user_data))
+        return rep
+
+
+# create a logout route
+@app.server.route('/logout', methods=['POST'])
+def route_logout():
+    # Redirect back to the index and remove the session cookie.
+    rep = flask.redirect('/')
+    rep.set_cookie('if-web-dashboard-session', '', expires=0)
+    return rep
+
+
 # create page layout
-app.layout = html.Div(
-    [
-        # The local store will take the initial data
-        # only the first time the page is loaded
-        # and keep it until it is cleared.
-        dcc.Store(id='local_storage', storage_type='local'),
-        dcc.Input(id='is_storage_checked', type='hidden', value='No'),
-        # container for the page content
-        dbc.Container(id='page-content', fluid=True),
-        # url management
-        dcc.Location(id='page_url', refresh=False),
-    ]
-)
+app.layout = app.layout = html.Div(id='if-web-auth-frame')
 
 
-# callback to check user_token in local storage
-@app.callback(Output('is_storage_checked', 'value'),
-              [Input('local_storage', 'modified_timestamp')],
-              [State('local_storage', 'data')])
-def check_local_storage(ts, local_storage):
-    if ts is None:
-        PreventUpdate
+@app.callback(Output('if-web-auth-frame', 'children'),
+              [Input('if-web-auth-frame', 'id')])
+def dynamic_layout(_):
+    session_cookie = flask.request.cookies.get('if-web-dashboard-session')
 
-    local_storage = local_storage or {'token': None, 'user_data': dict()}
-    token = local_storage.get('token')
-    user_data = local_storage.get('user_data')
-
-    if token and user_data:
-        cur_user.set_token(token, user_data)
-
-    return 'Yes'
-
-
-# set token to the local storage
-@app.callback(Output('local_storage', 'data'),
-              [Input('page_url', 'pathname')])
-def store_user_token(pathname):
-    if pathname == '/logout' or not cur_user.is_user_logged_in():
-        return {}
-    elif pathname:
-        return {'token': cur_user.get_token(), 'user_data': cur_user.get_user_data()}
-
-
-# callbacks, show page content under correct page urls
-@app.callback(Output('page-content', 'children'),
-              [Input('page_url', 'pathname')])
-def display_page(pathname):
-    if pathname == '/logout':
-        cur_user.user_logout()
-        dcc.Location(pathname='/login', id='redirect_to_login')
-
-    # if page is not login page and user is not logged in,
-    # redriect to login page
-    if pathname == '/login' and not cur_user.is_user_logged_in():
+    if not session_cookie:
+        # If there's no cookie we need to login.
         return login.layout
-    elif not cur_user.is_user_logged_in():
-        return dcc.Location(pathname='/login', id='redirect_to_login')
-    elif pathname == '/login':
-        return dcc.Location(pathname='/', id='redirect_to_login')
 
-    # show pages
+    user_data = json.loads(session_cookie)
+    cur_user.set_user_data(user_data)
+
     return page.get_layout()
 
 
