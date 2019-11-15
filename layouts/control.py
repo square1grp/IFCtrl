@@ -10,8 +10,6 @@ cur_user = User.get_instance()
 
 # control area layout
 def get_layout():
-    user_databases = cur_user.get_user_databases()
-
     layout = dbc.Row(children=[
         dbc.Col(
             dbc.Row(children=[
@@ -26,7 +24,7 @@ def get_layout():
                                 html.Label(html.Small('From'),
                                            className='m-0'),
                                 dcc.DatePickerSingle(
-                                    date=datetime.now(),
+                                    date=cur_user.get_time_stamp_from(),
                                     max_date_allowed=datetime.now(),
                                     display_format='MM / DD'
                                 )
@@ -37,7 +35,7 @@ def get_layout():
                             children=[
                                 html.Label(html.Small('To'), className='m-0'),
                                 dcc.DatePickerSingle(
-                                    date=datetime.now(),
+                                    date=cur_user.get_time_stamp_to(),
                                     max_date_allowed=datetime.now(),
                                     display_format='MM / DD'
                                 )
@@ -53,10 +51,11 @@ def get_layout():
                                         dict(
                                             label=database['database_name'],
                                             value=database['user_database_id']
-                                        ) for database in user_databases
+                                        ) for database in cur_user.get_user_databases()
                                     ],
                                     clearable=False,
-                                    value=list(user_databases)[0]['user_database_id'] if len(user_databases) else None)
+                                    value=cur_user.get_current_user_database_id()
+                                )
                             ], className='d-flex flex-column'),
                     ])
                 )
