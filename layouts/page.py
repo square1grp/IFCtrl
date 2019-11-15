@@ -19,14 +19,29 @@ def get_layout():
     return [
         html.Div([
             # create navigation layout
-            html.Nav([
-                html.Div(id='dismiss'),
-                html.Ul([html.Li(html.A(nav_item['label'], href=nav_item['target']))
-                         for nav_item in nav_items], className='list-unstyled components')
-            ], id='sidebar', className='mCustomScrollbar'),
-            dbc.Container([
-                header.get_layout()
-            ], fluid=True, className='content')
+            html.Nav(
+                children=[
+                    html.Div(id='dismiss'),
+                    html.Ul(children=[
+                        html.Li(
+                            html.A(
+                                children=nav_item['label'],
+                                href=nav_item['target']
+                            )
+                        )for nav_item in nav_items
+                    ], className='list-unstyled components')
+                ],
+                id='sidebar',
+                className='mCustomScrollbar'
+            ),
+            dbc.Container(
+                children=[
+                    header.get_layout(),
+                    control.get_layout()
+                ],
+                fluid=True,
+                className='content'
+            )
         ], className='wrapper'),
         html.Div(className='overlay'),
         dji.Import(src='/assets/js/scripts.js')

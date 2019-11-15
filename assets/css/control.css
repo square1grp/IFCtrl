@@ -1,0 +1,15 @@
+.control-container .SingleDatePickerInput__withBorder {
+    border: none;
+}
+
+.control-container .DateInput_input {
+    font-size    : 16px;
+    line-height  : 16px;
+    padding      : 6px 8px;
+    border       : 1px solid #dbdbdb;
+    border-radius: 4px;
+}
+
+.control-container .Select-control {
+    min-width: 300px;
+}

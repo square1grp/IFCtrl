@@ -18,12 +18,20 @@ class User:
         if User.__instance is None:
             User.__instance = self
 
+    # get user id
     def get_user_id(self):
         return self.user_data['user_info']['id']
 
     # get user name
     def get_user_name(self):
         return 'ifadmin'
+
+    # get user databases
+    def get_user_databases(self):
+        if self.user_data['user_databases']:
+            return self.user_data['user_databases'].values()
+        else:
+            return []
 
     # user login. params: username, password
     def user_login(self, username, password):
