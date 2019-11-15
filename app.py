@@ -47,7 +47,7 @@ def route_logout():
 
 
 # create page layout
-app.layout = app.layout = html.Div(id='if-web-auth-frame')
+app.layout = html.Div(id='if-web-auth-frame')
 
 
 @app.callback(Output('if-web-auth-frame', 'children'),
@@ -57,7 +57,7 @@ def dynamic_layout(_):
 
     if not session_cookie:
         # If there's no cookie we need to login.
-        return login.layout
+        return login.get_layout()
 
     user_data = json.loads(session_cookie)
     cur_user.set_user_data(user_data)

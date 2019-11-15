@@ -57,6 +57,7 @@ class Widget(__Widget):
                     data=self.get_graph_data(),
                     layout=self.get_graph_layout(self.get_layout_options())
                 ),
+                config=dict(displaylogo=False),
                 className='m-auto'
             )
         ]

@@ -3,13 +3,22 @@ import dash_bootstrap_components as dbc
 
 external_stylesheets = [
     dbc.themes.BOOTSTRAP,
+    '/assets/css/jquery.mCustomScrollbar.min.css',
     '/assets/css/styles.css',
+]
+
+external_scripts = [
+    '/assets/js/jquery-3.3.1.slim.min.js',
+    '/assets/js/popper.min.js',
+    '/assets/js/jquery.mCustomScrollbar.min.js',
+    '/assets/js/scripts.js'
 ]
 
 # Create dash app
 app = dash.Dash(
     __name__,
     external_stylesheets=external_stylesheets,
+    external_scripts=external_scripts,
     suppress_callback_exceptions=True,
     meta_tags=[{
         'name': 'viewport',

@@ -1,0 +1,5 @@
+{
+    "python.linting.pylamaArgs": [
+        "--ignore=E501"
+    ]
+}

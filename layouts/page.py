@@ -15,6 +15,15 @@ cur_user = User.get_instance()
 def get_layout():
     nav_items = cur_user.get_page_nav_items()
 
+    return html.Div([
+        # create navigation layout
+        html.Nav([
+            # html.Div(id='dismiss'),
+            html.Ul([html.Li(html.A(nav_item['label'], href=nav_item['target']))
+                     for nav_item in nav_items], className='list-unstyled components')
+        ], id='sidebar', className='mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar')
+    ])
+
     # create page layout
     layout = [
         header.layout,
@@ -27,7 +36,7 @@ def get_layout():
         ])
     ]
 
-    return layout
+    return dbc.Container(layout, fluid=True)
 
 # show correct page content by the current url
 @app.callback(Output('content-area', 'children'),
