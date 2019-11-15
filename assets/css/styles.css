@@ -5,3 +5,12 @@
 @import './header.css';
 @import './control.css';
 @import './widgets.css';
+
+body {
+    font-family     : 'Open Sans', sans-serif;
+    background-color: #FAFAFB;
+}
+
+#page-content {
+    min-height: 100vh;
+}

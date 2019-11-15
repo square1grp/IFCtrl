@@ -25,7 +25,7 @@ def get_layout():
                                   placeholder='Enter password', value=password)
                     ]),
                     html.Button('Login', type='submit',
-                                className='float-right btn btn-primary')
+                                className='col-12 col-lg-4 float-lg-right btn btn-primary')
                 ], action='/login', method='post')
             ], className='col-12 col-md-6 col-lg-4 m-auto'),
             align='center', className="height-100vh"),

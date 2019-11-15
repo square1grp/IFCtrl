@@ -15,7 +15,8 @@ def get_layout():
             dbc.Row(children=[
                 html.A(
                     html.Img(src='/assets/images/logo_1.png', height=50),
-                    href='/', className='col-white d-flex m-2'
+                    href='/',
+                    className='col-white d-none d-lg-flex m-2'
                 ),
                 dbc.Col(
                     dbc.Row(children=[
@@ -29,7 +30,7 @@ def get_layout():
                                     display_format='MM / DD'
                                 )
                             ],
-                            className='d-flex flex-column mr-2'
+                            className='d-flex flex-column m-2'
                         ),
                         html.Div(
                             children=[
@@ -40,7 +41,7 @@ def get_layout():
                                     display_format='MM / DD'
                                 )
                             ],
-                            className='d-flex flex-column mr-2'
+                            className='d-flex flex-column m-2'
                         ),
                         html.Div(
                             children=[
@@ -56,11 +57,11 @@ def get_layout():
                                     clearable=False,
                                     value=cur_user.get_current_user_database_id()
                                 )
-                            ], className='d-flex flex-column'),
-                    ])
+                            ], className='d-flex flex-column m-2'),
+                    ], className='flex-column flex-md-row')
                 )
             ]),
-            className='px-5'
+            className='px-lg-5'
         ),
         html.Hr(className='w-100 m-0')
     ], className='control-container')

@@ -46,7 +46,7 @@ def get_widget_board(widgets):
                         mirror_children,
                         className='mx-auto'
                     ),
-                    className='col-12 mb-2 widget-container p-md-1 %s' % get_classNames(
+                    className='col-12 mb-2 widget-container px-lg-5 %s' % get_classNames(
                         widget['size'])
                 )
             )
@@ -59,7 +59,7 @@ def get_widget_board(widgets):
             children.append(
                 dbc.Col(
                     ele_widget.get_content(),
-                    className='col-12 mb-2 widget-container p-md-1 %s' % get_classNames(
+                    className='col-12 mb-2 widget-container px-lg-5 %s' % get_classNames(
                         widget['size'])
                 )
             )

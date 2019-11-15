@@ -19,49 +19,25 @@ def get_layout():
     return [
         html.Div([
             # create navigation layout
-            html.Nav(
-                children=[
-                    html.Div(id='dismiss'),
-                    html.Ul(children=[
-                        html.Li(
-                            html.A(
-                                children=nav_item['label'],
-                                href=nav_item['target']
-                            )
-                        )for nav_item in nav_items
-                    ], className='list-unstyled components')
-                ],
-                id='sidebar',
-                className='mCustomScrollbar'
-            ),
+            navigation.get_layout(nav_items),
             dbc.Container(
                 children=[
                     header.get_layout(),
-                    control.get_layout()
+                    control.get_layout(),
+                    dbc.Row(children=[
+                        dcc.Location(id='dashboard_url', refresh=False),
+                        content.get_layout(),
+                        dbc.Col(className='col-3 d-none d-xl-block')
+                    ])
                 ],
                 fluid=True,
                 className='content'
             )
         ], className='wrapper'),
-        html.Div(className='overlay'),
+        html.Div(id='overlay'),
         dji.Import(src='/assets/js/scripts.js')
     ]
 
-
-'''
-    # create page layout
-    layout = [
-        header.layout,
-        control.layout,
-        dbc.Row([
-            dcc.Location(id='dashboard_url', refresh=False),
-            navigation.get_layout(nav_items),
-            content.layout,
-            dbc.Col(className='col-3 d-none d-xl-block')
-        ])
-    ]
-
-    return dbc.Container(layout, fluid=True)
 
 # show correct page content by the current url
 @app.callback(Output('content-area', 'children'),
@@ -87,4 +63,3 @@ def display_page(pathname):
     content_area = ContentArea(page)
 
     return content_area.get_content()
-'''

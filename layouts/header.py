@@ -25,8 +25,14 @@ def get_layout():
                 html.A(
                     children=[
                         html.Img(
+                            src='/assets/images/logo_1.png',
+                            height=50,
+                            className='d-block d-md-none'
+                        ),
+                        html.Img(
                             src='/assets/images/logo.png',
-                            height=50, width=50
+                            height=50,
+                            className='d-none d-md-block'
                         ),
                         html.Div(
                             html.Big(
@@ -36,9 +42,12 @@ def get_layout():
                                 ],
                                 className='m-auto'
                             ),
-                            className='ml-2 d-flex flex-column '
+                            className='ml-2 d-none d-md-flex flex-column'
                         )
-                    ], href='/', className='col-white d-flex m-2'),
+                    ],
+                    href='/',
+                    className='col-white d-flex m-2'
+                ),
                 html.Form(
                     children=[
                         html.Button(
@@ -70,15 +79,15 @@ def get_layout():
                                 )
                             ],
                             type='submit',
-                            className='bg-black col-white border-0 logout-button'
+                            className='bg-black col-white border-0 logout-button px-0'
                         )
                     ],
                     action='/logout',
                     method='post',
-                    className='ml-auto m-2'
+                    className='ml-auto m-2 d-none d-md-block'
                 )
             ]),
-            className='bg-black px-5'
+            className='bg-black'
         ),
         className='header-container'
     )

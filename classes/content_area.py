@@ -55,7 +55,7 @@ class ContentArea:
                     )],
                     className='widget relative-intensity-table'
                 ),
-                className='col-12 col-md-6 col-lg-5 p-md-1'
+                className='col-12 col-md-6 col-lg-5 px-lg-5'
             )
         )
 

@@ -1,13 +1,5 @@
-body {
-    font-family: 'Open Sans', sans-serif;
-}
-
-#page-content {
-    min-height: 100vh;
-}
-
 .bg-transparent {
-    background-color: transparent!important;
+    background-color: transparent !important;
 }
 
 .bg-black {
@@ -40,4 +32,11 @@ body {
 
 .min-250h {
     min-height: 250px;
+}
+
+.overlay {
+    top   : 0;
+    left  : 0;
+    right : 0;
+    bottom: 0;
 }

@@ -2,6 +2,13 @@
     border: none;
 }
 
+.control-container .SingleDatePicker,
+.control-container .SingleDatePicker > div,
+.control-container .SingleDatePicker > div .SingleDatePickerInput,
+.control-container .SingleDatePicker > div .DateInput {
+    width: 100%;
+}
+
 .control-container .DateInput_input {
     font-size    : 16px;
     line-height  : 16px;
@@ -11,5 +18,5 @@
 }
 
 .control-container .Select-control {
-    min-width: 300px;
+    min-width: 250px;
 }
