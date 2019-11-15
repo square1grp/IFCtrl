@@ -6,6 +6,7 @@ from classes.content_area import ContentArea
 from layouts import header, control, navigation, content
 from server import app
 from classes.User import User
+import dash_defer_js_import as dji
 
 
 # get the current user instance
@@ -15,15 +16,24 @@ cur_user = User.get_instance()
 def get_layout():
     nav_items = cur_user.get_page_nav_items()
 
-    return html.Div([
-        # create navigation layout
-        html.Nav([
-            # html.Div(id='dismiss'),
-            html.Ul([html.Li(html.A(nav_item['label'], href=nav_item['target']))
-                     for nav_item in nav_items], className='list-unstyled components')
-        ], id='sidebar', className='mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar')
-    ])
+    return [
+        html.Div([
+            # create navigation layout
+            html.Nav([
+                html.Div(id='dismiss'),
+                html.Ul([html.Li(html.A(nav_item['label'], href=nav_item['target']))
+                         for nav_item in nav_items], className='list-unstyled components')
+            ], id='sidebar', className='mCustomScrollbar'),
+            dbc.Container([
+                header.get_layout()
+            ], fluid=True, className='content')
+        ], className='wrapper'),
+        html.Div(className='overlay'),
+        dji.Import(src='/assets/js/scripts.js')
+    ]
 
+
+'''
     # create page layout
     layout = [
         header.layout,
@@ -62,3 +72,4 @@ def display_page(pathname):
     content_area = ContentArea(page)
 
     return content_area.get_content()
+'''

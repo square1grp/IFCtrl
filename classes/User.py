@@ -1,4 +1,4 @@
-from querymanager.intelliflux_dashboard_api_consumer import *
+from querymanager.intelliflux_dashboard_api_consumer import authenticateUser
 
 
 # user class and it's singleton
@@ -20,6 +20,10 @@ class User:
 
     def get_user_id(self):
         return self.user_data['user_info']['id']
+
+    # get user name
+    def get_user_name(self):
+        return 'ifadmin'
 
     # user login. params: username, password
     def user_login(self, username, password):

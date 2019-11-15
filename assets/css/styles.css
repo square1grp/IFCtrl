@@ -1,43 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import './font-awesome-4.7.0/css/font-awesome.min.css';
+@import './shared.css';
 @import './navigation.css';
+@import './header.css';
 @import './widgets.css';
-
-body {
-    font-family: 'Open Sans', sans-serif;
-}
-
-#page-content {
-    min-height: 100vh;
-}
-
-.bg-black {
-    background-color: #000000;
-}
-
-.bg-green {
-    background-color: #D4E8D5;
-}
-
-.bg-beige {
-    background-color: #F5F5DC;
-}
-
-.bg-blue {
-    background-color: #D8EAFA;
-}
-
-.col-black {
-    color: #000000;
-}
-
-.col-white {
-    color: #FFFFFF;
-}
-
-.height-100vh {
-    height: 100vh;
-}
-
-.min-250h {
-    min-height: 250px;
-}

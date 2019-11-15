@@ -49,7 +49,6 @@ def route_logout():
 # create page layout
 app.layout = html.Div(id='if-web-auth-frame')
 
-
 @app.callback(Output('if-web-auth-frame', 'children'),
               [Input('if-web-auth-frame', 'id')])
 def dynamic_layout(_):

@@ -10,8 +10,7 @@ external_stylesheets = [
 external_scripts = [
     '/assets/js/jquery-3.3.1.slim.min.js',
     '/assets/js/popper.min.js',
-    '/assets/js/jquery.mCustomScrollbar.min.js',
-    '/assets/js/scripts.js'
+    '/assets/js/jquery.mCustomScrollbar.min.js'
 ]
 
 # Create dash app
