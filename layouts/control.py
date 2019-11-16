@@ -55,7 +55,7 @@ def get_layout():
                                         ) for database in cur_user.get_user_databases()
                                     ],
                                     clearable=False,
-                                    value=cur_user.get_current_user_database_id()
+                                    value=cur_user.get_user_database_id()
                                 )
                             ], className='d-flex flex-column m-2'),
                     ], className='flex-column flex-md-row')

@@ -12,7 +12,7 @@ class Widget(__Widget):
         widget_name = 'user-%s-%s' % (user_id, self.widget_type)
         time_stamp_from = cur_user.get_time_stamp_from()
         time_stamp_to = cur_user.get_time_stamp_to()
-        database_id = 4
+        database_id = cur_user.get_user_database_id()
         sql_query = 'SELECT t_stamp, name, value FROM data WHERE name=\'Permeability\' AND t_stamp BETWEEN \'2019-10-01 00:00:00\' AND \'2019-10-02 00:00:00\' ORDER BY t_stamp ASC'
 
         self.widget_data = self.query_manager.getWidgetDataFromQueryManager(

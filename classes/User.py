@@ -74,11 +74,11 @@ class User:
             return []
 
     # get current user database id
-    def get_current_user_database_id(self):
+    def get_user_database_id(self):
         return self.database_id
 
     # set current user database id
-    def set_current_user_database_id(self, database_id):
+    def set_user_database_id(self, database_id):
         self.database_id = database_id
 
     # get time stamp now
