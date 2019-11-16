@@ -7,9 +7,9 @@ class User:
     __instance = None
     __message = None
     user_data = dict(databases=dict(), config=dict(nav=[], pages=[]))
-    database_id = 4
-    time_stamp_from = '2019-10-01'
-    time_stamp_to = '2019-10-02'
+    database_id = None
+    time_stamp_from = None
+    time_stamp_to = None
 
     @staticmethod
     def get_instance():
@@ -44,6 +44,9 @@ class User:
     # set user data
     def set_user_data(self, user_data):
         self.user_data = user_data
+        self.database_id = 4
+        self.time_stamp_from = self.get_time_stamp_today()
+        self.time_stamp_to = self.get_time_stamp_today()
 
     # get page navigations
     def get_page_nav_items(self):
@@ -81,9 +84,9 @@ class User:
     def set_user_database_id(self, database_id):
         self.database_id = database_id
 
-    # get time stamp now
-    def get_time_stamp_now(self):
-        return datetime.now().strftime('%Y-%m-%d')
+    # get time stamp today
+    def get_time_stamp_today(self):
+        return datetime.today().strftime('%Y-%m-%d')
 
     # get time stamp from
     def get_time_stamp_from(self):
@@ -91,7 +94,7 @@ class User:
 
     # set time stamp from
     def set_time_stamp_from(self, time_stamp_from=None):
-        self.time_stamp_from = time_stamp_from if time_stamp_from else self.get_time_stamp_now()
+        self.time_stamp_from = time_stamp_from if time_stamp_from else self.get_time_stamp_today()
 
     # get time stamp to
     def get_time_stamp_to(self):
@@ -99,4 +102,4 @@ class User:
 
     # set time stamp to
     def set_time_stamp_to(self, time_stamp_to=None):
-        self.time_stamp_from = time_stamp_to if time_stamp_to else self.get_time_stamp_now()
+        self.time_stamp_to = time_stamp_to if time_stamp_to else self.get_time_stamp_today()

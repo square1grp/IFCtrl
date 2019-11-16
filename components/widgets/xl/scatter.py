@@ -21,7 +21,6 @@ class Widget(__Widget):
         return self.widget_data
 
     # get average
-
     def get_average_data(self, data1, data2):
         return dict(
             x=data1['x'],

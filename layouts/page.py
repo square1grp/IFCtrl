@@ -1,7 +1,7 @@
 import dash_html_components as html
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 from classes.content_area import ContentArea
 from layouts import header, control, navigation, content
 from server import app
@@ -41,8 +41,14 @@ def get_layout():
 
 # show correct page content by the current url
 @app.callback(Output('content-area', 'children'),
-              [Input('dashboard_url', 'pathname')])
-def display_page(pathname):
+              [Input('dashboard_url', 'pathname'),
+               Input('time_stamp_from', 'date'),
+               Input('time_stamp_to', 'date'),
+               Input('user_database_id', 'value')])
+def display_page(pathname, time_stamp_from, time_stamp_to, database_id):
+    cur_user.set_time_stamp_from(time_stamp_from)
+    cur_user.set_time_stamp_to(time_stamp_to)
+    cur_user.set_user_database_id(database_id)
     slug = ''
     if pathname is not None:
         slug = pathname.replace('/', '')

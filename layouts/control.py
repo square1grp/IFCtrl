@@ -25,8 +25,9 @@ def get_layout():
                                 html.Label(html.Small('From'),
                                            className='m-0'),
                                 dcc.DatePickerSingle(
-                                    date=cur_user.get_time_stamp_from(),
-                                    max_date_allowed=datetime.now(),
+                                    id='time_stamp_from',
+                                    date=datetime.today().strftime('%Y-%m-%d'),
+                                    max_date_allowed=datetime.today(),
                                     display_format='MM / DD'
                                 )
                             ],
@@ -36,8 +37,9 @@ def get_layout():
                             children=[
                                 html.Label(html.Small('To'), className='m-0'),
                                 dcc.DatePickerSingle(
-                                    date=cur_user.get_time_stamp_to(),
-                                    max_date_allowed=datetime.now(),
+                                    id='time_stamp_to',
+                                    date=datetime.today().strftime('%Y-%m-%d'),
+                                    max_date_allowed=datetime.today(),
                                     display_format='MM / DD'
                                 )
                             ],
@@ -48,6 +50,7 @@ def get_layout():
                                 html.Label(html.Small('System'),
                                            className='m-0'),
                                 dcc.Dropdown(
+                                    id='user_database_id',
                                     options=[
                                         dict(
                                             label=database['database_name'],
