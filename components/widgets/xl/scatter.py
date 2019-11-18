@@ -2,9 +2,11 @@ from ..__widget import __Widget
 import plotly.graph_objs as go
 import dash_core_components as dcc
 from classes.User import User
+from querymanager.intelliflux_querymanager import IntelliFluxQueryManager
 
 
 class Widget(__Widget):
+    queyManager = IntelliFluxQueryManager()
     # get widget data via query manager
     def fetch_widget_data(self):
         cur_user = User.get_instance()
@@ -16,7 +18,7 @@ class Widget(__Widget):
                                                          time_stamp_from, time_stamp_to, database_id, user_id)
         sql_query = 'SELECT t_stamp, name, value FROM data WHERE name=\'Permeability\' AND t_stamp BETWEEN \'2019-10-01 00:00:00\' AND \'2019-10-02 00:00:00\' ORDER BY t_stamp ASC'
 
-        self.widget_data = self.query_manager.getWidgetDataFromQueryManager(
+        self.widget_data = queyManager.query_manager.getWidgetDataFromQueryManager(
             widget_name, time_stamp_from, time_stamp_to, database_id, sql_query, user_id, True)
 
         return self.widget_data
