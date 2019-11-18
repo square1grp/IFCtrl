@@ -18,7 +18,7 @@ class Widget(__Widget):
                                                          time_stamp_from, time_stamp_to, database_id, user_id)
         sql_query = 'SELECT t_stamp, name, value FROM data WHERE name=\'Permeability\' AND t_stamp BETWEEN \'2019-10-01 00:00:00\' AND \'2019-10-02 00:00:00\' ORDER BY t_stamp ASC'
 
-        self.widget_data = queyManager.query_manager.getWidgetDataFromQueryManager(
+        self.widget_data = queyManager.getWidgetDataFromQueryManager(
             widget_name, time_stamp_from, time_stamp_to, database_id, sql_query, user_id, True)
 
         return self.widget_data
