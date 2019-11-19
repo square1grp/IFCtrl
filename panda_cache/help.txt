@@ -1,0 +1,2 @@
+Query manger use this directory to store cache files so please ensure that the user you are using to execute
+this application has read and write permissions for this directory.
