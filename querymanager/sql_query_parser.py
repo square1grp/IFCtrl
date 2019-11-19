@@ -35,7 +35,7 @@ def extract_table_identifiers(token_stream):
     for item in token_stream:
         if isinstance(item, IdentifierList):
             for identifier in item.get_identifiers():
-                value = identifier.value.replace('"', '').lower()
+                value = identifier.value.replace('"', '').lower()                
                 yield value
         elif isinstance(item, Identifier):
             value = item.value.replace('"', '').lower()
@@ -49,21 +49,17 @@ def extract_tables(sql_query):
     for statement in statements:
         if statement.get_type() != 'UNKNOWN':
             stream = extract_from_part(statement)
-            extracted_tables.append(
-                set(list(extract_table_identifiers(stream))))
+            extracted_tables.append(set(list(extract_table_identifiers(stream))))
     if len(extracted_tables) > 0 and sql_query.find('data'):
         extracted_tables[0] = 'data'
 
     return extracted_tables[0]
 
 
-def replace_date_filters(sql_query, date_from):
-    split_by_between = sql_query.split('BETWEEN')
-    if len(split_by_between) >= 1:
-        split_by_and = split_by_between[1].split('AND')
-        date_from_in_db = split_by_and[0]
-        sql_query = sql_query.replace(date_from_in_db, " '"+date_from+"' ")
+def replace_date_filters(sql_query,date_from_in_query,cache_data_last_date):
+    sql_query = sql_query.replace(date_from_in_query,cache_data_last_date)
     return sql_query
+
 
 
 def get_tokens(sql_query):
@@ -90,6 +86,6 @@ def get_tokens(sql_query):
                 })
             else:
                 get_tokens(i)
-        except:
+        except Exception as e:
             pass
     return sql_tokens
