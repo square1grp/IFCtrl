@@ -42,13 +42,16 @@ def get_layout():
 # show correct page content by the current url
 @app.callback(Output('content-area', 'children'),
               [Input('dashboard_url', 'pathname'),
-               Input('time_stamp_from', 'date'),
-               Input('time_stamp_to', 'date'),
-               Input('user_database_id', 'value')])
-def display_page(pathname, time_stamp_from, time_stamp_to, database_id):
-    cur_user.set_time_stamp_from(time_stamp_from)
-    cur_user.set_time_stamp_to(time_stamp_to)
-    cur_user.set_user_database_id(database_id)
+               Input('submit_filter_button', 'n_clicks')],
+              [State('time_stamp_from', 'date'),
+               State('time_stamp_to', 'date'),
+               State('user_database_id', 'value')])
+def display_page(pathname, n_clicks, time_stamp_from, time_stamp_to, database_id):
+    if n_clicks and n_clicks > 0:
+        cur_user.set_time_stamp_from(time_stamp_from)
+        cur_user.set_time_stamp_to(time_stamp_to)
+        cur_user.set_user_database_id(database_id)
+
     slug = ''
     if pathname is not None:
         slug = pathname.replace('/', '')

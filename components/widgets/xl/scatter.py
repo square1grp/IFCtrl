@@ -46,7 +46,7 @@ class Widget(__Widget):
             mode='lines',
             line=dict(),
             marker=dict()
-        )]
+        )] if self.widget_data is not None else []
 
     # additional layout options
     def get_layout_options(self):
