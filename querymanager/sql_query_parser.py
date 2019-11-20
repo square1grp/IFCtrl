@@ -57,6 +57,8 @@ def extract_tables(sql_query):
 
 
 def replace_date_filters(sql_query,date_from_in_query,cache_data_last_date):
+    date_from_in_query = date_from_in_query.strftime('%Y-%m-%d')
+    cache_data_last_date = cache_data_last_date.strftime('%Y-%m-%d')
     sql_query = sql_query.replace(date_from_in_query,cache_data_last_date)
     return sql_query
 
