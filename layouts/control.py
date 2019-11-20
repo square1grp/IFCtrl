@@ -2,7 +2,7 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 from classes.User import User
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 cur_user = User.get_instance()
@@ -26,7 +26,8 @@ def get_layout():
                                            className='m-0'),
                                 dcc.DatePickerSingle(
                                     id='time_stamp_from',
-                                    date=datetime.today().strftime('%Y-%m-%d'),
+                                    date=(datetime.today() -
+                                          timedelta(days=1)).strftime('%Y-%m-%d'),
                                     max_date_allowed=datetime.today(),
                                     display_format='MM / DD'
                                 )
@@ -60,7 +61,18 @@ def get_layout():
                                     clearable=False,
                                     value=cur_user.get_user_database_id()
                                 )
-                            ], className='d-flex flex-column m-2'),
+                            ], className='d-flex flex-column m-2'
+                        ),
+                        html.Div(
+                            children=[
+                                html.Label(html.Small('Button', className='invisible'),
+                                           className='m-0'),
+                                dbc.Button(
+                                    html.Span('Apply Changes'),
+                                    id='submit_filter_button',
+                                )
+                            ], className='d-flex flex-column m-2'
+                        ),
                     ], className='flex-column flex-md-row')
                 )
             ]),

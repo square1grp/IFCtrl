@@ -1,5 +1,5 @@
 from querymanager.intelliflux_dashboard_api_consumer import authenticateUser
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 # user class and it's singleton
@@ -44,9 +44,11 @@ class User:
     # set user data
     def set_user_data(self, user_data):
         self.user_data = user_data
-        self.database_id = 4
-        self.time_stamp_from = self.get_time_stamp_today()
+        self.database_id = 1
+        self.time_stamp_from = self.get_time_stamp_yesterday()
         self.time_stamp_to = self.get_time_stamp_today()
+        # print(self.time_stamp_from)
+        # print(self.time_stamp_to())
 
     # get page navigations
     def get_page_nav_items(self):
@@ -84,6 +86,10 @@ class User:
     def set_user_database_id(self, database_id):
         self.database_id = database_id
 
+    # get time stamp yeaterday
+    def get_time_stamp_yesterday(self):
+        return (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d')
+
     # get time stamp today
     def get_time_stamp_today(self):
         return datetime.today().strftime('%Y-%m-%d')
@@ -94,7 +100,7 @@ class User:
 
     # set time stamp from
     def set_time_stamp_from(self, time_stamp_from=None):
-        self.time_stamp_from = time_stamp_from if time_stamp_from else self.get_time_stamp_today()
+        self.time_stamp_from = time_stamp_from if time_stamp_from else self.get_time_stamp_yesterday()
 
     # get time stamp to
     def get_time_stamp_to(self):
