@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 
 
 class IntelliFluxQueryManager(object):
-    
+
     """
     This method provides the data for widgets and manage the cache
 
@@ -34,8 +34,8 @@ class IntelliFluxQueryManager(object):
             widget_name = str(user_id)+'_'+str(database_id)+'_'+widget_name.replace(" ", "_")
             
             master_data_frame = self.loadMasterDataFrame()
-            #print(master_data_frame)
-            #return master_data_frame
+            # print(master_data_frame)
+            # return master_data_frame
             if master_data_frame is None:
                 master_data_frame = self.createMasterDataframe()
                 if master_data_frame is not None:
@@ -47,7 +47,8 @@ class IntelliFluxQueryManager(object):
                         self.addNewRefrenceInMasterDataframe(master_data_frame,widget_name,user_id,database_id,time_stamp_from,time_stamp_to)
                         data_tag = 'From API - No Cached Data'
             else:
-                cache_data_detail_df = self.getWidgetDataFrameRefrence(master_data_frame,widget_name,user_id,database_id)
+                cache_data_detail_df = self.getWidgetDataFrameRefrence(
+                    master_data_frame, widget_name, user_id, database_id)
                 if cache_data_detail_df.count().widget_name == 1:
                     cached_widget_data = self.loadCachedDataFrames(widget_name)
                     panda_Sql_query = self.getPandaSqlQuery(sql_query,'cached_widget_data')
@@ -80,8 +81,8 @@ class IntelliFluxQueryManager(object):
                          self.updateMasterDataFrame(master_data_frame,widget_name,user_id,database_id,time_stamp_from,time_stamp_to)
                          data_tag = 'From API due to Cache Expiry'
                 else:
-                    json_widget_data = getWidgetData(database_id,sql_query)
-                    widget_data =  pd.read_json(json_widget_data)
+                    json_widget_data = getWidgetData(database_id, sql_query)
+                    widget_data = pd.read_json(json_widget_data)
                     widget_data.to_pickle('panda_cache/'+widget_name+'.pkl')
                     self.addNewRefrenceInMasterDataframe(master_data_frame,widget_name,user_id,database_id,time_stamp_from,time_stamp_to)
                     data_tag = 'From API - No Cached Data'
@@ -92,9 +93,9 @@ class IntelliFluxQueryManager(object):
             if widget_data is None:
                 widget_data = {}
 
-        return  widget_data
+        return widget_data
 
-    #Load Master Dataframe from Memory
+    # Load Master Dataframe from Memory
     def loadMasterDataFrame(self):
         try:
             df = pd.read_pickle("panda_cache/master.pkl")
@@ -104,9 +105,8 @@ class IntelliFluxQueryManager(object):
             #print(error)
             return None
 
-    
-    #load Cached Data Frames
-    def loadCachedDataFrames(self,widget_name):
+    # load Cached Data Frames
+    def loadCachedDataFrames(self, widget_name):
         try:
             df = pd.read_pickle('panda_cache/'+widget_name+'.pkl')
             #print('Cached data retured for '+widget_name)
@@ -115,22 +115,24 @@ class IntelliFluxQueryManager(object):
             print(error)
             return None
 
-    #Create Master Dataframe
+    # Create Master Dataframe
     def createMasterDataframe(self):
         try:
-            master_data_frame = pd.DataFrame(columns=['widget_name','user_id','database_id','time_stamp_from', 'time_stamp_to','last_modification_time'])
+            master_data_frame = pd.DataFrame(columns=[
+                                             'widget_name', 'user_id', 'database_id', 'time_stamp_from', 'time_stamp_to', 'last_modification_time'])
             master_data_frame.to_pickle('panda_cache/master.pkl')
             return master_data_frame
         except (Exception) as error:
             print(error)
         return None
 
-    #Add refrence of new widget cache in Master Dataframe
-    def addNewRefrenceInMasterDataframe(self,master_data_frame,widget_name,user_id,database_id,time_stamp_from,time_stamp_to):
+    # Add refrence of new widget cache in Master Dataframe
+    def addNewRefrenceInMasterDataframe(self, master_data_frame, widget_name, user_id, database_id, time_stamp_from, time_stamp_to):
         status = False
         current_date_time = datetime.now()
         try:
-            updated_df = master_data_frame.append(pd.DataFrame({'widget_name':[widget_name],'user_id':[user_id],'database_id':[database_id],'time_stamp_from':[time_stamp_from],'time_stamp_to':[time_stamp_to],'last_modification_time':current_date_time}), ignore_index = True)
+            updated_df = master_data_frame.append(pd.DataFrame({'widget_name': [widget_name], 'user_id': [user_id], 'database_id': [database_id], 'time_stamp_from': [
+                                                  time_stamp_from], 'time_stamp_to': [time_stamp_to], 'last_modification_time': current_date_time}), ignore_index=True)
             updated_df.to_pickle('panda_cache/master.pkl')
             status = True
         except (Exception) as error:
@@ -152,18 +154,19 @@ class IntelliFluxQueryManager(object):
             print(error)
         return status
 
-    #Get detail of widget cache file from Master Data Frame
-    def getWidgetDataFrameRefrence(self,master_data_frame,widget_name,user_id,database_id):
-        widget_data_ref = master_data_frame.loc[(master_data_frame['widget_name'] == widget_name) & (master_data_frame['user_id'] == user_id) & (master_data_frame['database_id'] == database_id)]
+    # Get detail of widget cache file from Master Data Frame
+    def getWidgetDataFrameRefrence(self, master_data_frame, widget_name, user_id, database_id):
+        widget_data_ref = master_data_frame.loc[(master_data_frame['widget_name'] == widget_name) & (
+            master_data_frame['user_id'] == user_id) & (master_data_frame['database_id'] == database_id)]
         widget_data_count = widget_data_ref.count().widget_name
         return widget_data_ref
 
-    def jsonloads(self,text):
+    def jsonloads(self, text):
         index, values = json.loads(text)
         return pd.read_json
 
-    #Create panda SQL query
-    def getPandaSqlQuery(self,sql_query,widget_name):
+    # Create panda SQL query
+    def getPandaSqlQuery(self, sql_query, widget_name):
         sql_table_name = extract_tables(sql_query)
         panda_sql_query = sql_query.replace(sql_table_name, widget_name)
-        return panda_sql_query 
+        return panda_sql_query

@@ -3,12 +3,15 @@ import dash_bootstrap_components as dbc
 
 external_stylesheets = [
     dbc.themes.BOOTSTRAP,
-    '/assets/css/jquery.mCustomScrollbar.min.css',
+    # '/assets/css/jquery.dataTables.min.css',
+    # '/assets/css/scroller.dataTables.min.css',
 ]
 
 external_scripts = [
-    '/assets/js/jquery-3.3.1.slim.min.js',
+    '/assets/js/jquery-3.3.1.min.js',
     '/assets/js/popper.min.js',
+    # '/assets/js/jquery.dataTables.min.js',
+    # '/assets/js/dataTables.scroller.min.js',
 ]
 
 # Create dash app
