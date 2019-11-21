@@ -14,7 +14,6 @@ class Widget(__Widget):
         user_id = cur_user.get_user_id()
         time_stamp_from = cur_user.get_time_stamp_from()
         time_stamp_to = cur_user.get_time_stamp_to()
-        print(time_stamp_from, time_stamp_to)
         database_id = cur_user.get_user_database_id()
         widget_name = '%s-widget-%s-%s-%s-user-%s' % (self.widget_type,
                                                       time_stamp_from, time_stamp_to, database_id, user_id)

@@ -1,5 +1,11 @@
 from querymanager.intelliflux_dashboard_api_consumer import authenticateUser
 from datetime import datetime, timedelta
+import json
+
+user_data = None
+
+with open('user_data.json', 'r') as f:
+    user_data = json.loads(f.read())
 
 
 # user class and it's singleton
@@ -24,7 +30,7 @@ class User:
 
     # user login. params: username, password
     def user_login(self, username, password):
-        user_data = authenticateUser(username, password)
+        # user_data = authenticateUser(username, password)
 
         if user_data is not None:
             if user_data['is_authenticated']:
@@ -47,8 +53,6 @@ class User:
         self.database_id = 1
         self.time_stamp_from = self.get_time_stamp_yesterday()
         self.time_stamp_to = self.get_time_stamp_today()
-        # print(self.time_stamp_from)
-        # print(self.time_stamp_to())
 
     # get page navigations
     def get_page_nav_items(self):
