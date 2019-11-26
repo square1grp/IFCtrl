@@ -22,7 +22,7 @@ def get_widget_board(widgets):
 
     for widget in widgets:
         # check if widget is mirror layout which shows 2 widgets
-        if 'layout' in widget and widget['layout'] is 'mirror':
+        if 'layout' in widget and widget['layout'] == 'mirror':
             mirror_children = []
 
             for idx, child_widget in enumerate(widget['children'], start=1):
