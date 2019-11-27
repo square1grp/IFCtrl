@@ -91,6 +91,8 @@ class IntelliFluxQueryManager(object):
             print('Process completed with data_tag: '+data_tag)
             if widget_data is None:
                 widget_data = {}
+            else:
+                widget_data = widget_data.to_json(date_format='iso')
 
         return  widget_data
 
