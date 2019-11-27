@@ -17,8 +17,14 @@ def route_login():
     username = data.get('username')
     password = data.get('password')
 
+    cur_user.set_auth(username=username, password=password)
+
     if not username or not password:
-        cur_user.set_message('Incorrect Username or Password')
+        cur_user.set_message(dict(
+            form=None,
+            username='Username is required' if not username else '',
+            password='Password is required' if not password else '',
+        ))
 
         return flask.redirect('/login')
 
@@ -38,7 +44,11 @@ def route_login():
         rep.set_cookie('if-web-dashboard-session', json.dumps(user_data))
         return rep
 
-    cur_user.set_message('Incorrect Username or Password')
+    cur_user.set_message(dict(
+        form='Username or Password is incorrect.',
+        username=None,
+        password=None
+    ))
     return flask.redirect('/login')
 
 # create a logout route

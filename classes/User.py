@@ -11,7 +11,8 @@ with open('user_data.json', 'r') as f:
 # user class and it's singleton
 class User:
     __instance = None
-    __message = None
+    __message = dict(form=None, username=None, password=None)
+    __auth = dict(username=None, password=None)
     user_data = dict(databases=dict(), config=dict(nav=[], pages=[]))
     database_id = None
     time_stamp_from = None
@@ -40,8 +41,20 @@ class User:
                 return True
 
         # set error message if it's failed
-        self.set_message('Incorrect Username or Password')
+        self.set_message(dict(
+            form='Username or Password is incorrect.',
+            username=None,
+            password=None
+        ))
         return False
+
+    # set auth
+    def set_auth(self, username, password):
+        self.__auth = dict(username=username, password=password)
+
+    # get auth
+    def get_auth(self):
+        return self.__auth
 
     # get user data
     def get_user_data(self):

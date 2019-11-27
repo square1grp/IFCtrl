@@ -5,9 +5,6 @@ from classes.User import User
 from dash.dependencies import Input, Output, State
 from server import app
 
-username = ''  # config.username if config.username else ''
-password = ''  # config.password if config.password else ''
-
 
 # get the current user instance
 cur_user = User.get_instance()
@@ -15,23 +12,36 @@ cur_user = User.get_instance()
 
 # create login layout
 def get_layout():
-    form_msg = cur_user.get_message()
+    auth = cur_user.get_auth()
+
+    username = auth['username']
+    password = auth['password']
+
+    message = cur_user.get_message()
 
     layout = dbc.Container(
         dbc.Row(
             dbc.Col([
                 html.H1('Log In', className='text-center'),
-                html.P(html.Small(form_msg), className='error-message') if form_msg else None,
+                html.P(message['form'], className='error-message text-center') if message['form'] is not None else None,
                 html.Form([
                     dbc.FormGroup([
                         dbc.Label('Username', html_for='username'),
                         dbc.Input(type='text', id='username', name='username',
-                                  placeholder='Enter username', value=username)
+                                  placeholder='Enter username', value=username, invalid=True if message['form'] or message['username'] else False),
+                        dbc.FormFeedback(
+                            message['username'],
+                            valid=False,
+                        ),
                     ]),
                     dbc.FormGroup([
                         dbc.Label('Password', html_for='password'),
                         dbc.Input(type='password', id='password', name='password',
-                                  placeholder='Enter password', value=password),
+                                  placeholder='Enter password', value=password, invalid=True if message['form'] or message['password'] else False),
+                        dbc.FormFeedback(
+                            message['password'],
+                            valid=False,
+                        ),
                     ]),
                     html.Button('Login', type='submit', id='login_button',
                                 className='col-12 col-lg-4 float-lg-right btn btn-primary')
