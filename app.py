@@ -18,7 +18,9 @@ def route_login():
     password = data.get('password')
 
     if not username or not password:
-        flask.abort(401)
+        cur_user.set_message('Incorrect Username or Password')
+
+        return flask.redirect('/login')
 
     # actual implementation should verify the password.
     # Recommended to only keep a hash in database and use something like
@@ -36,6 +38,8 @@ def route_login():
         rep.set_cookie('if-web-dashboard-session', json.dumps(user_data))
         return rep
 
+    cur_user.set_message('Incorrect Username or Password')
+    return flask.redirect('/login')
 
 # create a logout route
 @app.server.route('/logout', methods=['POST'])

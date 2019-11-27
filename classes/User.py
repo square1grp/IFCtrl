@@ -30,7 +30,7 @@ class User:
 
     # user login. params: username, password
     def user_login(self, username, password):
-        # user_data = authenticateUser(username, password)
+        user_data = authenticateUser(username, password)
 
         if user_data is not None:
             if user_data['is_authenticated']:
@@ -40,7 +40,7 @@ class User:
                 return True
 
         # set error message if it's failed
-        self.__message = 'Incorrect Username or Password'
+        self.set_message('Incorrect Username or Password')
         return False
 
     # get user data
@@ -62,12 +62,15 @@ class User:
     def get_page_items(self):
         return self.user_data['user_info']['data_config']['pages']
 
+    # set error message, field=username, password
+    def set_message(self, message):
+        self.__message = message
+
     # get error message
     def get_message(self):
         return self.__message
 
     # get user id
-
     def get_user_id(self):
         return self.user_data['user_info']['id']
 
