@@ -1,9 +1,6 @@
 import dash_html_components as html
 import dash_bootstrap_components as dbc
-import config
 from classes.User import User
-from dash.dependencies import Input, Output, State
-from server import app
 
 
 # get the current user instance
@@ -23,7 +20,8 @@ def get_layout():
         dbc.Row(
             dbc.Col([
                 html.H1('Log In', className='text-center'),
-                html.P(message['form'], className='error-message text-center') if message['form'] is not None else None,
+                html.P(
+                    message['form'], className='error-message text-center') if message['form'] is not None else None,
                 html.Form([
                     dbc.FormGroup([
                         dbc.Label('Username', html_for='username'),
