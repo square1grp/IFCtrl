@@ -3,6 +3,7 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 from querymanager.intelliflux_dashboard_api_consumer import getWidgetData
 import json
+from layouts import reports
 
 
 # content area class
@@ -38,7 +39,7 @@ class ContentArea:
                 return ' - '
 
             return data['relativeIntensity']['0']
-        except:
+        except Exception:
             return ' - '
 
     # get test table for disply relativeIntensity
@@ -50,7 +51,8 @@ class ContentArea:
                         html.H4('Relative Intensity'),
                         className='title text-uppercase text-center'
                     ), html.Div(
-                        html.H2(self.getrelativeIntensity(), className='m-auto'),
+                        html.H2(self.getrelativeIntensity(),
+                                className='m-auto'),
                         className='text-uppercase text-center font-weight-bold min-250h d-flex flex-column'
                     )],
                     className='widget relative-intensity-table'
@@ -62,7 +64,7 @@ class ContentArea:
     # get report content
 
     def get_content_reports(self):
-        return 'This is a blank-report'
+        return reports.get_layout()
 
     # get content
     # widget-baord feeds or reports

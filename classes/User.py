@@ -1,11 +1,18 @@
 from querymanager.intelliflux_dashboard_api_consumer import authenticateUser
 from datetime import datetime, timedelta
+import json
+
+user_data = None
+
+with open('user_data.json', 'r') as f:
+    user_data = json.loads(f.read())
 
 
 # user class and it's singleton
 class User:
     __instance = None
-    __message = None
+    __message = dict(form=None, username=None, password=None)
+    __auth = dict(username=None, password=None)
     user_data = dict(databases=dict(), config=dict(nav=[], pages=[]))
     database_id = None
     time_stamp_from = None
@@ -34,8 +41,20 @@ class User:
                 return True
 
         # set error message if it's failed
-        self.__message = 'Incorrect Username or Password'
+        self.set_message(dict(
+            form='Username or Password is incorrect.',
+            username=None,
+            password=None
+        ))
         return False
+
+    # set auth
+    def set_auth(self, username, password):
+        self.__auth = dict(username=username, password=password)
+
+    # get auth
+    def get_auth(self):
+        return self.__auth
 
     # get user data
     def get_user_data(self):
@@ -47,8 +66,6 @@ class User:
         self.database_id = 1
         self.time_stamp_from = self.get_time_stamp_yesterday()
         self.time_stamp_to = self.get_time_stamp_today()
-        # print(self.time_stamp_from)
-        # print(self.time_stamp_to())
 
     # get page navigations
     def get_page_nav_items(self):
@@ -58,12 +75,15 @@ class User:
     def get_page_items(self):
         return self.user_data['user_info']['data_config']['pages']
 
+    # set error message, field=username, password
+    def set_message(self, message):
+        self.__message = message
+
     # get error message
     def get_message(self):
         return self.__message
 
     # get user id
-
     def get_user_id(self):
         return self.user_data['user_info']['id']
 

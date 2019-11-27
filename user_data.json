@@ -1,0 +1,67 @@
+{
+    "is_authenticated": true,
+    "user_databases": {
+        "0": {
+            "database_id": 1,
+            "database_name": "IFdatabase_px1904_mmf1",
+            "user_database_id": 1,
+            "user_id": 2
+        },
+        "1": {
+            "database_id": 2,
+            "database_name": "IFdatabase_px1904_mmf2",
+            "user_database_id": 2,
+            "user_id": 2
+        },
+        "2": {
+            "database_id": 3,
+            "database_name": "ifdatabase_cet1802_a",
+            "user_database_id": 3,
+            "user_id": 2
+        }
+    },
+    "user_info": {
+        "data_config": {
+            "nav": [
+                {
+                    "label": "Report Page",
+                    "target": "/report-page"
+                },
+                {
+                    "label": "Report Page",
+                    "target": "/report-page"
+                },
+                {
+                    "label": "Report Page",
+                    "target": "/report-page"
+                },
+                {
+                    "label": "Report Page",
+                    "target": "/report-page"
+                },
+                {
+                    "label": "Report Page",
+                    "target": "/report-page"
+                },
+                {
+                    "label": "Report Page",
+                    "target": "/report-page"
+                },
+                {
+                    "label": "Report Page",
+                    "target": "/report-page"
+                }
+            ],
+            "pages": [
+                {
+                    "config": [],
+                    "content-type": "report-board",
+                    "name": "Report Page",
+                    "slug": "report-page"
+                }
+            ]
+        },
+        "id": 2,
+        "username": "admin"
+    }
+}
