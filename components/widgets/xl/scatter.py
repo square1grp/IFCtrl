@@ -23,8 +23,6 @@ class Widget(__Widget):
         self.widget_data = self.queyManager.getWidgetDataFromQueryManager(
             widget_name, time_stamp_from, time_stamp_to, database_id, sql_query, user_id, True)
 
-        return self.widget_data
-
     # get average
     def get_average_data(self, data1, data2):
         return dict(
@@ -45,7 +43,7 @@ class Widget(__Widget):
             mode='lines',
             line=dict(),
             marker=dict()
-        )] if self.widget_data is not None else []
+        )] if self.widget_data else []
 
     # additional layout options
     def get_layout_options(self):
