@@ -1,14 +1,12 @@
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
-from classes.User import User
 from datetime import datetime, timedelta
+from server import current_user
 
 
 # control area layout
 def get_layout():
-    cur_user = User.get_instance()
-
     layout = dbc.Row(children=[
         dbc.Col(
             dbc.Row(children=[
@@ -55,10 +53,10 @@ def get_layout():
                                         dict(
                                             label=database['database_name'],
                                             value=database['user_database_id']
-                                        ) for database in cur_user.get_user_databases()
+                                        ) for database in current_user.get_user_databases()
                                     ],
                                     clearable=False,
-                                    value=cur_user.get_user_database_id()
+                                    value=current_user.get_user_database_id()
                                 )
                             ], className='d-flex flex-column m-2'
                         ),

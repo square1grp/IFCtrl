@@ -1,5 +1,9 @@
 import dash
 import dash_bootstrap_components as dbc
+from classes.User import User
+
+# get the current user instance
+current_user = User.get_instance()
 
 external_stylesheets = [
     dbc.themes.BOOTSTRAP,
