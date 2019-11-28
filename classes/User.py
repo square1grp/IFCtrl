@@ -1,6 +1,7 @@
 from querymanager.intelliflux_dashboard_api_consumer import authenticateUser
 from datetime import datetime, timedelta
 import json
+import base64
 
 user_data = None
 
@@ -13,7 +14,9 @@ class User:
     __instance = None
     __message = dict(form=None, username=None, password=None)
     __auth = dict(username=None, password=None)
-    user_data = dict(databases=dict(), config=dict(nav=[], pages=[]))
+    username = None
+    token = None
+    user_data = None
     database_id = None
     time_stamp_from = None
     time_stamp_to = None
@@ -29,14 +32,43 @@ class User:
         if User.__instance is None:
             User.__instance = self
 
+    # set user token
+    def set_token(self, token):
+        self.token = token
+
+        if self.user_data is None:
+            self.load_user_data_cache()
+
+    # get user token
+    def get_token(self):
+        return self.token
+
+    # get user name
+    def get_username(self):
+        if self.token is not None:
+            self.username = base64.b64decode(self.token).decode()
+
+        return self.username
+
     # user login. params: username, password
     def user_login(self, username, password):
         user_data = authenticateUser(username, password)
 
         if user_data is not None:
             if user_data['is_authenticated']:
-                self.__message = None
+                # set error message if it's failed
+                self.set_message(dict(
+                    form=None,
+                    username=None,
+                    password=None
+                ))
+
                 self.user_data = user_data
+
+                token = base64.b64encode(username.encode()).decode()
+                self.set_token(token)
+
+                self.save_user_data_cache()
 
                 return True
 
@@ -67,6 +99,28 @@ class User:
         self.time_stamp_from = self.get_time_stamp_yesterday()
         self.time_stamp_to = self.get_time_stamp_today()
 
+    # load user_data cache
+    def load_user_data_cache(self):
+        self.user_data = None
+
+        if self.token:
+            try:
+                with open('user_data_temp/%s.json' % self.token, 'r') as f:
+                    self.user_data = json.loads(f.read())
+            except:
+                pass
+
+        return self.user_data
+
+    # save user_data cache
+    def save_user_data_cache(self):
+        if self.token:
+            try:
+                with open('user_data_temp/%s.json' % self.token, 'w') as f:
+                    f.write(json.dumps(self.user_data))
+            except:
+                pass
+
     # get page navigations
     def get_page_nav_items(self):
         return self.user_data['user_info']['data_config']['nav']
@@ -86,10 +140,6 @@ class User:
     # get user id
     def get_user_id(self):
         return self.user_data['user_info']['id']
-
-    # get user name
-    def get_user_name(self):
-        return 'ifadmin'
 
     # get user databases
     def get_user_databases(self):

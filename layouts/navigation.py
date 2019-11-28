@@ -40,7 +40,7 @@ def get_layout(nav_items=[]):
                                     dbc.Col(
                                         children=[
                                             html.B(
-                                                cur_user.get_user_name()),
+                                                cur_user.get_username()),
                                             html.Span('Logout')
                                         ],
                                         className='d-flex flex-column p-0'

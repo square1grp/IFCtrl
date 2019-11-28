@@ -5,7 +5,6 @@ from server import app
 from classes.User import User
 from layouts import page, login
 import config
-import json
 
 # get the current user instance
 cur_user = User.get_instance()
@@ -38,10 +37,9 @@ def route_login():
 
         # Here we just store the given username in a cookie.
         # Actual session cookies should be signed or use a JWT token.
+        token = cur_user.get_token()
 
-        user_data = cur_user.get_user_data()
-
-        rep.set_cookie('if-web-dashboard-session', json.dumps(user_data))
+        rep.set_cookie('if-web-dashboard-token', token)
         return rep
 
     cur_user.set_message(dict(
@@ -54,9 +52,11 @@ def route_login():
 # create a logout route
 @app.server.route('/logout', methods=['POST'])
 def route_logout():
+    cur_user.set_auth(username='', password='')
+
     # Redirect back to the index and remove the session cookie.
     rep = flask.redirect('/')
-    rep.set_cookie('if-web-dashboard-session', '', expires=0)
+    rep.set_cookie('if-web-dashboard-token', '', expires=0)
     return rep
 
 
@@ -66,14 +66,17 @@ app.layout = html.Div(id='if-web-auth-frame')
 @app.callback(Output('if-web-auth-frame', 'children'),
               [Input('if-web-auth-frame', 'id')])
 def dynamic_layout(_):
-    session_cookie = flask.request.cookies.get('if-web-dashboard-session')
+    token = flask.request.cookies.get('if-web-dashboard-token')
 
-    if not session_cookie:
+    if not token:
         # If there's no cookie we need to login.
         return login.get_layout()
 
-    user_data = json.loads(session_cookie)
-    cur_user.set_user_data(user_data)
+    cur_user.set_token(token)
+
+    if cur_user.get_user_data() is None:
+        # If there's no cookie we need to login.
+        return login.get_layout()
 
     return page.get_layout()
 
