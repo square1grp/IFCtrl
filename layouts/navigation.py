@@ -2,10 +2,10 @@ import dash_html_components as html
 import dash_bootstrap_components as dbc
 from classes.User import User
 
-cur_user = User.get_instance()
-
 
 def get_layout(nav_items=[]):
+
+    cur_user = User.get_instance()
     # create navigation layout
     return html.Nav(
         children=[

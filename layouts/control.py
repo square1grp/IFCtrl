@@ -5,11 +5,10 @@ from classes.User import User
 from datetime import datetime, timedelta
 
 
-cur_user = User.get_instance()
-
-
 # control area layout
 def get_layout():
+    cur_user = User.get_instance()
+
     layout = dbc.Row(children=[
         dbc.Col(
             dbc.Row(children=[

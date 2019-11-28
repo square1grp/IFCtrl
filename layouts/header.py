@@ -1,15 +1,14 @@
-import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from classes.User import User
 
 
-# get the current user instance
-cur_user = User.get_instance()
-
-
 # create header layout
 def get_layout():
+
+    # get the current user instance
+    cur_user = User.get_instance()
+
     layout = dbc.Row(
         dbc.Col(
             dbc.Row(children=[

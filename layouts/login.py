@@ -3,12 +3,12 @@ import dash_bootstrap_components as dbc
 from classes.User import User
 
 
-# get the current user instance
-cur_user = User.get_instance()
-
-
 # create login layout
 def get_layout():
+
+    # get the current user instance
+    cur_user = User.get_instance()
+
     auth = cur_user.get_auth()
 
     username = auth['username']

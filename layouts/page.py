@@ -9,11 +9,9 @@ from classes.User import User
 import dash_defer_js_import as dji
 
 
-# get the current user instance
-cur_user = User.get_instance()
-
-
 def get_layout():
+    # get the current user instance
+    cur_user = User.get_instance()
     nav_items = cur_user.get_page_nav_items()
 
     return [
@@ -47,6 +45,8 @@ def get_layout():
                State('time_stamp_to', 'date'),
                State('user_database_id', 'value')])
 def display_page(pathname, n_clicks, time_stamp_from, time_stamp_to, database_id):
+    # get the current user instance
+    cur_user = User.get_instance()
     if n_clicks and n_clicks > 0:
         cur_user.set_time_stamp_from(time_stamp_from)
         cur_user.set_time_stamp_to(time_stamp_to)

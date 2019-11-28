@@ -6,12 +6,12 @@ from classes.User import User
 from layouts import page, login
 import config
 
-# get the current user instance
-cur_user = User.get_instance()
-
 # Create a login route
 @app.server.route('/login', methods=['POST'])
 def route_login():
+    # get the current user instance
+    cur_user = User.get_instance()
+
     data = flask.request.form
     username = data.get('username')
     password = data.get('password')
@@ -52,6 +52,8 @@ def route_login():
 # create a logout route
 @app.server.route('/logout', methods=['POST'])
 def route_logout():
+    # get the current user instance
+    cur_user = User.get_instance()
     cur_user.set_auth(username='', password='')
 
     # Redirect back to the index and remove the session cookie.
@@ -66,6 +68,9 @@ app.layout = html.Div(id='if-web-auth-frame')
 @app.callback(Output('if-web-auth-frame', 'children'),
               [Input('if-web-auth-frame', 'id')])
 def dynamic_layout(_):
+    # get the current user instance
+    cur_user = User.get_instance()
+
     token = flask.request.cookies.get('if-web-dashboard-token')
 
     if not token:
