@@ -1,20 +1,14 @@
 import dash_html_components as html
 import dash_bootstrap_components as dbc
-from classes.User import User
-
-
-# get the current user instance
-cur_user = User.get_instance()
+from server import current_user
 
 
 # create login layout
 def get_layout():
-    auth = cur_user.get_auth()
+    username = ''
+    password = ''
 
-    username = auth['username']
-    password = auth['password']
-
-    message = cur_user.get_message()
+    message = current_user.get_message()
 
     layout = dbc.Container(
         dbc.Row(

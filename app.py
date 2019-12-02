@@ -1,13 +1,10 @@
 import flask
 import dash_html_components as html
 from dash.dependencies import Input, Output
-from server import app
-from classes.User import User
+from server import app, current_user
 from layouts import page, login
 import config
-
-# get the current user instance
-cur_user = User.get_instance()
+import base64
 
 # Create a login route
 @app.server.route('/login', methods=['POST'])
@@ -16,10 +13,8 @@ def route_login():
     username = data.get('username')
     password = data.get('password')
 
-    cur_user.set_auth(username=username, password=password)
-
     if not username or not password:
-        cur_user.set_message(dict(
+        current_user.set_message(dict(
             form=None,
             username='Username is required' if not username else '',
             password='Password is required' if not password else '',
@@ -32,17 +27,17 @@ def route_login():
     # bcrypt to encrypt the password and check the hashed results.
 
     # Return a redirect with
-    if cur_user.user_login(username, password):
+    if current_user.user_login(username, password):
         rep = flask.redirect('/')
 
         # Here we just store the given username in a cookie.
         # Actual session cookies should be signed or use a JWT token.
-        token = cur_user.get_token()
+        token = base64.b64encode(username.encode()).decode()
 
         rep.set_cookie('if-web-dashboard-token', token)
         return rep
 
-    cur_user.set_message(dict(
+    current_user.set_message(dict(
         form='Username or Password is incorrect.',
         username=None,
         password=None
@@ -52,8 +47,6 @@ def route_login():
 # create a logout route
 @app.server.route('/logout', methods=['POST'])
 def route_logout():
-    cur_user.set_auth(username='', password='')
-
     # Redirect back to the index and remove the session cookie.
     rep = flask.redirect('/')
     rep.set_cookie('if-web-dashboard-token', '', expires=0)
@@ -72,9 +65,9 @@ def dynamic_layout(_):
         # If there's no cookie we need to login.
         return login.get_layout()
 
-    cur_user.set_token(token)
+    current_user.set_token(token)
 
-    if cur_user.get_user_data() is None:
+    if current_user.get_user_data() is None:
         # If there's no cookie we need to login.
         return login.get_layout()
 

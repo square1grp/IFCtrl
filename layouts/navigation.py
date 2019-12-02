@@ -1,8 +1,6 @@
 import dash_html_components as html
 import dash_bootstrap_components as dbc
-from classes.User import User
-
-cur_user = User.get_instance()
+from server import current_user
 
 
 def get_layout(nav_items=[]):
@@ -40,7 +38,7 @@ def get_layout(nav_items=[]):
                                     dbc.Col(
                                         children=[
                                             html.B(
-                                                cur_user.get_username()),
+                                                current_user.get_username()),
                                             html.Span('Logout')
                                         ],
                                         className='d-flex flex-column p-0'

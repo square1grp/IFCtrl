@@ -14,12 +14,11 @@ class User:
     __instance = None
     __message = dict(form=None, username=None, password=None)
     __auth = dict(username=None, password=None)
-    username = None
     token = None
-    user_data = None
-    database_id = None
-    time_stamp_from = None
-    time_stamp_to = None
+    user_data_list = dict()
+    database_id_list = dict()
+    time_stamp_from_list = dict()
+    time_stamp_to_list = dict()
 
     @staticmethod
     def get_instance():
@@ -35,9 +34,10 @@ class User:
     # set user token
     def set_token(self, token):
         self.token = token
+        username = self.get_username()
 
-        if self.user_data is None:
-            self.load_user_data_cache()
+        if username is not None:
+            self.set_user_data(username, self.load_user_data_cache())
 
     # get user token
     def get_token(self):
@@ -45,10 +45,10 @@ class User:
 
     # get user name
     def get_username(self):
-        if self.token is not None:
-            self.username = base64.b64decode(self.token).decode()
+        if self.get_token() is not None:
+            return base64.b64decode(self.get_token()).decode()
 
-        return self.username
+        return None
 
     # user login. params: username, password
     def user_login(self, username, password):
@@ -63,12 +63,11 @@ class User:
                     password=None
                 ))
 
-                self.user_data = user_data
-
+                self.set_user_data(username, user_data)
                 token = base64.b64encode(username.encode()).decode()
                 self.set_token(token)
 
-                self.save_user_data_cache()
+                self.save_user_data_cache(user_data)
 
                 return True
 
@@ -80,54 +79,59 @@ class User:
         ))
         return False
 
-    # set auth
-    def set_auth(self, username, password):
-        self.__auth = dict(username=username, password=password)
-
-    # get auth
-    def get_auth(self):
-        return self.__auth
-
     # get user data
     def get_user_data(self):
-        return self.user_data
+        username = self.get_username()
+
+        if username is not None:
+            return self.user_data_list[username]
+
+        return dict()
 
     # set user data
-    def set_user_data(self, user_data):
-        self.user_data = user_data
-        self.database_id = 1
-        self.time_stamp_from = self.get_time_stamp_yesterday()
-        self.time_stamp_to = self.get_time_stamp_today()
+    def set_user_data(self, username=None, user_data=[]):
+        if username is None:
+            return
+
+        self.user_data_list[username] = user_data
+        db = [db for db in user_data['user_databases'].values()][0]
+        self.database_id_list[username] = db['user_database_id']
+        self.time_stamp_from_list[username] = self.get_time_stamp_yesterday()
+        self.time_stamp_to_list[username] = self.get_time_stamp_today()
 
     # load user_data cache
     def load_user_data_cache(self):
-        self.user_data = None
-
-        if self.token:
-            try:
-                with open('user_data_temp/%s.json' % self.token, 'r') as f:
-                    self.user_data = json.loads(f.read())
-            except:
-                pass
-
-        return self.user_data
+        try:
+            with open('user_data_temp/%s.json' % self.get_token(), 'r') as f:
+                return json.loads(f.read())
+        except:
+            return []
 
     # save user_data cache
-    def save_user_data_cache(self):
-        if self.token:
-            try:
-                with open('user_data_temp/%s.json' % self.token, 'w') as f:
-                    f.write(json.dumps(self.user_data))
-            except:
-                pass
+    def save_user_data_cache(self, user_data):
+        try:
+            with open('user_data_temp/%s.json' % self.get_token(), 'w') as f:
+                f.write(json.dumps(user_data))
+        except:
+            pass
 
     # get page navigations
     def get_page_nav_items(self):
-        return self.user_data['user_info']['data_config']['nav']
+        try:
+            user_data = self.get_user_data()
+
+            return user_data['user_info']['data_config']['nav']
+        except:
+            return []
 
     # get page items
     def get_page_items(self):
-        return self.user_data['user_info']['data_config']['pages']
+        try:
+            user_data = self.get_user_data()
+
+            return user_data['user_info']['data_config']['pages']
+        except:
+            return []
 
     # set error message, field=username, password
     def set_message(self, message):
@@ -139,22 +143,37 @@ class User:
 
     # get user id
     def get_user_id(self):
-        return self.user_data['user_info']['id']
+        try:
+            user_data = self.get_user_data()
+
+            return user_data['user_info']['id']
+        except:
+            return None
 
     # get user databases
     def get_user_databases(self):
-        if self.user_data['user_databases']:
-            return self.user_data['user_databases'].values()
-        else:
+        try:
+            user_data = self.get_user_data()
+
+            return user_data['user_databases'].values()
+        except:
             return []
 
     # get current user database id
     def get_user_database_id(self):
-        return self.database_id
+        username = self.get_username()
+
+        if username is not None:
+            return self.database_id_list[username]
+
+        return None
 
     # set current user database id
     def set_user_database_id(self, database_id):
-        self.database_id = database_id
+        username = self.get_username()
+
+        if username is not None:
+            self.database_id_list[username] = database_id
 
     # get time stamp yeaterday
     def get_time_stamp_yesterday(self):
@@ -166,16 +185,33 @@ class User:
 
     # get time stamp from
     def get_time_stamp_from(self):
-        return self.time_stamp_from
+        username = self.get_username()
+
+        if username is not None:
+            return self.time_stamp_from_list[username]
+
+        return self.get_time_stamp_yesterday()
 
     # set time stamp from
     def set_time_stamp_from(self, time_stamp_from=None):
-        self.time_stamp_from = time_stamp_from if time_stamp_from else self.get_time_stamp_yesterday()
+        username = self.get_username()
+
+        if username is not None:
+            self.time_stamp_from_list[username] = time_stamp_from if time_stamp_from else self.get_time_stamp_yesterday(
+            )
 
     # get time stamp to
     def get_time_stamp_to(self):
-        return self.time_stamp_to
+        username = self.get_username()
+
+        if username is not None:
+            return self.time_stamp_to_list[username]
+
+        return self.get_time_stamp_today()
 
     # set time stamp to
     def set_time_stamp_to(self, time_stamp_to=None):
-        self.time_stamp_to = time_stamp_to if time_stamp_to else self.get_time_stamp_today()
+        username = self.get_username()
+
+        if username is not None:
+            self.time_stamp_to_list = time_stamp_to if time_stamp_to else self.get_time_stamp_today()
