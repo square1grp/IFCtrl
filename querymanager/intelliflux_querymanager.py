@@ -92,10 +92,11 @@ class IntelliFluxQueryManager(object):
             print('Process completed with data_tag: '+data_tag)
             if widget_data is None:
                 widget_data = {}
+                return widget_data
             else:
-                widget_data = widget_data.to_json(date_format='iso')
-
-        return widget_data
+                dict_widget_data = widget_data.to_dict(orient='index')
+                print(dict_widget_data)
+                return dict_widget_data
 
     # Load Master Dataframe from Memory
     def loadMasterDataFrame(self):
