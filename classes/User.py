@@ -214,4 +214,4 @@ class User:
         username = self.get_username()
 
         if username is not None:
-            self.time_stamp_to_list = time_stamp_to if time_stamp_to else self.get_time_stamp_today()
+            self.time_stamp_to_list[username] = time_stamp_to if time_stamp_to else self.get_time_stamp_today()
