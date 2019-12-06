@@ -37,7 +37,12 @@ class User:
         username = self.get_username()
 
         if username is not None:
-            self.set_user_data(username, self.load_user_data_cache())
+            try:
+                self.set_user_data(username, self.load_user_data_cache())
+            except:
+                return False
+
+        return True
 
     # get user token
     def get_token(self):
@@ -52,7 +57,7 @@ class User:
 
     # user login. params: username, password
     def user_login(self, username, password):
-        user_data = authenticateUser(username, password)
+        # user_data = authenticateUser(username, password)
 
         if user_data is not None:
             if user_data['is_authenticated']:
@@ -161,6 +166,7 @@ class User:
 
     # get current user database id
     def get_user_database_id(self):
+        return 3
         username = self.get_username()
 
         if username is not None:
@@ -185,6 +191,7 @@ class User:
 
     # get time stamp from
     def get_time_stamp_from(self):
+        return '2019-01-01'
         username = self.get_username()
 
         if username is not None:
@@ -202,6 +209,7 @@ class User:
 
     # get time stamp to
     def get_time_stamp_to(self):
+        return '2019-07-31'
         username = self.get_username()
 
         if username is not None:
@@ -214,4 +222,5 @@ class User:
         username = self.get_username()
 
         if username is not None:
-            self.time_stamp_to_list[username] = time_stamp_to if time_stamp_to else self.get_time_stamp_today()
+            self.time_stamp_to_list[username] = time_stamp_to if time_stamp_to else self.get_time_stamp_today(
+            )

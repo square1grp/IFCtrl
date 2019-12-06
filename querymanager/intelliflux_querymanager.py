@@ -95,7 +95,7 @@ class IntelliFluxQueryManager(object):
                 return widget_data
             else:
                 dict_widget_data = widget_data.to_dict(orient='index')
-                print(dict_widget_data)
+                # print(dict_widget_data)
                 return dict_widget_data
 
     # Load Master Dataframe from Memory

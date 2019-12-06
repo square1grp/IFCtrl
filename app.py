@@ -65,7 +65,9 @@ def dynamic_layout(_):
         # If there's no cookie we need to login.
         return login.get_layout()
 
-    current_user.set_token(token)
+    if not current_user.set_token(token):
+        # If there's no cache file for logged in user
+        return login.get_layout()
 
     if current_user.get_user_data() is None:
         # If there's no cookie we need to login.

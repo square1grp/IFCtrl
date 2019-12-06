@@ -24,28 +24,12 @@
         "data_config": {
             "nav": [
                 {
-                    "label": "Report Page",
-                    "target": "/report-page"
+                    "label": "System Overview",
+                    "target": "/page-1"
                 },
                 {
-                    "label": "Report Page",
-                    "target": "/report-page"
-                },
-                {
-                    "label": "Report Page",
-                    "target": "/report-page"
-                },
-                {
-                    "label": "Report Page",
-                    "target": "/report-page"
-                },
-                {
-                    "label": "Report Page",
-                    "target": "/report-page"
-                },
-                {
-                    "label": "Report Page",
-                    "target": "/report-page"
+                    "label": "Monwabisi RO",
+                    "target": "/page-2"
                 },
                 {
                     "label": "Report Page",
@@ -54,7 +38,79 @@
             ],
             "pages": [
                 {
-                    "config": [],
+                    "content-type": "widget-board",
+                    "name": "System Overview",
+                    "slug": "page-1",
+                    "config": [
+                        {
+                            "widgets": [
+                                {
+                                    "size": "xlarge",
+                                    "type": "xl-bar",
+                                    "config": {
+                                        "title": {
+                                            "text": "Daily Production"
+                                        },
+                                        "metric": "FiltrateFlow",
+                                        "flow_min": -1
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "config": [
+                        {
+                            "widgets": [
+                                {
+                                    "size": "medium",
+                                    "type": "md-scatter",
+                                    "config": {
+                                        "title": {
+                                            "text": "Flux Trend"
+                                        },
+                                        "metric": "Flux"
+                                    }
+                                },
+                                {
+                                    "size": "medium",
+                                    "type": "md-scatter",
+                                    "config": {
+                                        "title": {
+                                            "text": "TMP Trend"
+                                        },
+                                        "metric": "TMPbar",
+                                        "mode": "lines"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "widgets": [
+                                {
+                                    "size": "medium",
+                                    "type": "md-scatter",
+                                    "config": {
+                                        "title": {
+                                            "text": "Permeability Trend"
+                                        },
+                                        "metric": "Permeability"
+                                    }
+                                },
+                                {
+                                    "size": "medium",
+                                    "type": "md-scatter",
+                                    "config": {
+                                        "title": {
+                                            "text": "Turbidity Trend"
+                                        },
+                                        "metric": "FeedTurbidity"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
                     "content-type": "report-board",
                     "name": "Report Page",
                     "slug": "report-page"

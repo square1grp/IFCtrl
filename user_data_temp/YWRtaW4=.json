@@ -1,1 +1,123 @@
-{"is_authenticated": true, "user_databases": {"0": {"database_id": 1, "database_name": "IFdatabase_px1904_mmf1", "user_database_id": 1, "user_id": 2}, "1": {"database_id": 2, "database_name": "IFdatabase_px1904_mmf2", "user_database_id": 2, "user_id": 2}, "2": {"database_id": 3, "database_name": "ifdatabase_cet1802_a", "user_database_id": 3, "user_id": 2}}, "user_info": {"data_config": {"nav": [{"label": "Page Nav Item 1", "target": "/page-1"}, {"label": "Page Nav Item 2", "target": "/page-1"}, {"label": "Page Nav Item 3", "target": "/page-1"}, {"label": "Page Nav Item 4", "target": "/page-1"}, {"label": "Page Nav Item 5", "target": "/page-1"}], "pages": [{"config": [{"widgets": [{"config": {"graph": {"data": [], "layout": {"showlegend": false, "xaxis": {"gridcolor": "#5F5F5F", "linecolor": "#5F5F5F", "linewidth": 2, "showgrid": true, "showline": true, "tickfont_color": "#000000", "zeroline": true}, "yaxis": {"gridcolor": "#5F5F5F", "showgrid": true, "showline": false, "tickfont_color": "#000000", "title": "Bar", "zerolinecolor": "#5F5F5F", "zerolinewidth": 1}}, "show_average": true}, "title": {"text": "TMP Daily Range", "transform": "uppercase"}}, "size": "xlarge", "type": "xl-scatter"}]}], "content-type": "widget-board", "name": "Page Title 1", "slug": "page-1"}]}, "id": 2, "username": "admin"}}
+{
+    "is_authenticated": true,
+    "user_databases": {
+        "0": {
+            "database_id": 1,
+            "database_name": "IFdatabase_px1904_mmf1",
+            "user_database_id": 1,
+            "user_id": 2
+        },
+        "1": {
+            "database_id": 2,
+            "database_name": "IFdatabase_px1904_mmf2",
+            "user_database_id": 2,
+            "user_id": 2
+        },
+        "2": {
+            "database_id": 3,
+            "database_name": "ifdatabase_cet1802_a",
+            "user_database_id": 3,
+            "user_id": 2
+        }
+    },
+    "user_info": {
+        "data_config": {
+            "nav": [
+                {
+                    "label": "System Overview",
+                    "target": "/page-1"
+                },
+                {
+                    "label": "Monwabisi RO",
+                    "target": "/page-2"
+                },
+                {
+                    "label": "Report Page",
+                    "target": "/report-page"
+                }
+            ],
+            "pages": [
+                {
+                    "content-type": "widget-board",
+                    "name": "System Overview",
+                    "slug": "page-1",
+                    "config": [
+                        {
+                            "widgets": [
+                                {
+                                    "size": "xlarge",
+                                    "type": "xl-bar",
+                                    "config": {
+                                        "title": {
+                                            "text": "Daily Production"
+                                        },
+                                        "metric": "FiltrateFlow",
+                                        "flow_min": -1
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "config": [
+                        {
+                            "widgets": [
+                                {
+                                    "size": "medium",
+                                    "type": "md-scatter",
+                                    "config": {
+                                        "title": {
+                                            "text": "Flux Trend"
+                                        },
+                                        "metric": "Flux"
+                                    }
+                                },
+                                {
+                                    "size": "medium",
+                                    "type": "md-scatter",
+                                    "config": {
+                                        "title": {
+                                            "text": "TMP Trend"
+                                        },
+                                        "metric": "TMPbar",
+                                        "mode": "lines"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "widgets": [
+                                {
+                                    "size": "medium",
+                                    "type": "md-scatter",
+                                    "config": {
+                                        "title": {
+                                            "text": "Permeability Trend"
+                                        },
+                                        "metric": "Permeability"
+                                    }
+                                },
+                                {
+                                    "size": "medium",
+                                    "type": "md-scatter",
+                                    "config": {
+                                        "title": {
+                                            "text": "Turbidity Trend"
+                                        },
+                                        "metric": "FeedTurbidity"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "content-type": "report-board",
+                    "name": "Report Page",
+                    "slug": "report-page"
+                }
+            ]
+        },
+        "id": 2,
+        "username": "admin"
+    }
+}

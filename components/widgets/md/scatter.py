@@ -1,42 +1,67 @@
 from ..__widget import __Widget
 import plotly.graph_objs as go
 import dash_core_components as dcc
+from querymanager.intelliflux_querymanager import IntelliFluxQueryManager
+import pandas as pd
+from classes.User import User
 
 
 class Widget(__Widget):
+    queryManager = IntelliFluxQueryManager()
 
-    # get average
-    def get_average_data(self, data1, data2):
-        return dict(
-            x=data1['x'],
-            y=[(data1['y'][i] + data2['y'][i]) /
-                2 for i in range(len(data1['x']))],
-            mode='markers',
-            marker=dict(color='#FF8C00', size=8)
-        )
+    def fetch_widget_data(self):
+        """
+        Get widget data via query manager
+
+        returns: {Dict} A dictionary of the pandas dataframe data from the query manager
+        """
+        # Create the widget name for the QueryManager
+        cur_user = User.get_instance()
+        user_id = cur_user.get_user_id()
+        time_stamp_from = cur_user.get_time_stamp_from()
+        time_stamp_to = cur_user.get_time_stamp_to()
+        database_id = cur_user.get_user_database_id()
+        widget_name = '%s-widget-%s-%s-%s-%s-user-%s' % (self.widget_type, self.config['title']['text'],
+                                                         time_stamp_from, time_stamp_to, database_id, user_id)
+        # Define the MySQL query to run
+        sql_query = "SELECT t_stamp, value, name FROM data WHERE name=\'" + self.config['metric'] + "\' AND t_stamp BETWEEN \'%s 00:00:00\' AND \'%s 00:00:00\' order by t_stamp" % (
+            time_stamp_from, time_stamp_to)
+
+        # Fetch the data from the query manager
+        self.widget_data = self.queryManager.getWidgetDataFromQueryManager(
+            widget_name, time_stamp_from, time_stamp_to, database_id, sql_query, user_id, True)
+
+        # return the fetched data
+        return self.widget_data
 
     # generate data for bar chart
     def get_graph_data(self, marker_props=[]):
-        data_arr = self.config['graph']['data']
+        """
+        Generate data for a scatter plot
 
-        if 'show_average' in self.config['graph'] and\
-                self.config['graph']['show_average'] and\
-                len(self.config['graph']['data']) == 2:
+        Arguments:
+            marker_props: {List} Properties for the plot markers
 
-            avg_data = self.get_average_data(
-                self.config['graph']['data'][0], self.config['graph']['data'][1])
-            data_arr.append(avg_data)
+        returns: {List} A lost containing a graph object
+        """
 
+        if not self.widget_data:
+            return []
+
+        # read the query manager dict into a dataframe
+        data = pd.DataFrame.from_dict(self.widget_data, orient="index")
+
+        # return the scatter plot configuration
         return [
             go.Scatter(
-                x=data['x'],
-                y=data['y'],
-                name=data['name'] if 'name' in data else None,
-                fill=data['fill'] if 'fill' in data else None,
-                mode=data['mode'] if 'mode' in data else 'lines',
-                line=data['line'] if 'line' in data else dict(),
-                marker=data['marker'] if 'marker' in data else dict()
-            ) for data in data_arr
+                # Use the t_stamp column of the dataframe as X
+                x=data['t_stamp'],
+                # Use the value column of the dataframe as Y
+                y=data['value'],
+                # Set plot mode to use markers
+                mode=self.config['mode'] if 'mode' in self.config else 'markers',
+                name='data'                 # Name the data series
+            )
         ]
 
     # additional layout options
