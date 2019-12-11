@@ -26,14 +26,6 @@
                 {
                     "label": "System Overview",
                     "target": "/page-1"
-                },
-                {
-                    "label": "Monwabisi RO",
-                    "target": "/page-2"
-                },
-                {
-                    "label": "Report Page",
-                    "target": "/report-page"
                 }
             ],
             "pages": [
@@ -45,75 +37,46 @@
                         {
                             "widgets": [
                                 {
-                                    "size": "xlarge",
-                                    "type": "xl-bar",
+                                    "size": "medium",
+                                    "type": "md-cleaning_levels",
                                     "config": {
                                         "title": {
-                                            "text": "Daily Production"
+                                            "text": "Cleaning Levels"
                                         },
-                                        "metric": "FiltrateFlow",
-                                        "flow_min": -1
+                                        "metric": "cleans"
                                     }
+                                },
+                                {
+                                    "size": "medium",
+                                    "layout": "mirror",
+                                    "children": [
+                                        {
+                                            "size": "medium",
+                                            "type": "md-cleaning_stats",
+                                            "config": {
+                                                "title": {
+                                                    "text": "Cleaning Stats"
+                                                },
+                                                "metric": "",
+                                                "mode": "total+common"
+                                            }
+                                        },
+                                        {
+                                            "size": "medium",
+                                            "type": "md-cleaning_stats",
+                                            "config": {
+                                                "title": {
+                                                    "text": "Cleaning Stats"
+                                                },
+                                                "metric": "",
+                                                "mode": "time+use"
+                                            }
+                                        }
+                                    ]
                                 }
                             ]
                         }
                     ]
-                },
-                {
-                    "config": [
-                        {
-                            "widgets": [
-                                {
-                                    "size": "medium",
-                                    "type": "md-scatter",
-                                    "config": {
-                                        "title": {
-                                            "text": "Flux Trend"
-                                        },
-                                        "metric": "Flux"
-                                    }
-                                },
-                                {
-                                    "size": "medium",
-                                    "type": "md-scatter",
-                                    "config": {
-                                        "title": {
-                                            "text": "TMP Trend"
-                                        },
-                                        "metric": "TMPbar",
-                                        "mode": "lines"
-                                    }
-                                }
-                            ]
-                        },
-                        {
-                            "widgets": [
-                                {
-                                    "size": "medium",
-                                    "type": "md-scatter",
-                                    "config": {
-                                        "title": {
-                                            "text": "Permeability Trend"
-                                        },
-                                        "metric": "Permeability"
-                                    }
-                                },
-                                {
-                                    "size": "medium",
-                                    "type": "md-scatter",
-                                    "config": {
-                                        "title": {
-                                            "text": "Turbidity Trend"
-                                        },
-                                        "metric": "FeedTurbidity"
-                                    }
-                                }
-                            ]
-                        }
-                    ],
-                    "content-type": "report-board",
-                    "name": "Report Page",
-                    "slug": "report-page"
                 }
             ]
         },

@@ -41,8 +41,6 @@ def getWidgetData(database_id, sqlquery):
             'http://138.68.51.100/api/v1.0/dashboarddata/', headers=headers, data=json.dumps(params), auth=HTTPBasicAuth('admin', 'admin@123')
         )
         return api_response.text
-        widget_data = json.loads(api_response.text)
-        return widget_data
     except (Exception) as error:
         print(error)
     return None
