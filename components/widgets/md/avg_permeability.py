@@ -54,6 +54,10 @@ class Widget(__Widget):
         # return the fetched data
         return self.widget_data
 
+    # additional layout
+    def get_layout_options(self):
+        return dict(xaxis=dict(showticklabels=False), yaxis=dict(showticklabels=False))
+
     # generate data for bar chart
     def get_graph_data(self):
         if not self.widget_data:
@@ -66,6 +70,7 @@ class Widget(__Widget):
             go.Bar(
                 x=list(self.widget_data.keys()),
                 y=list(self.widget_data.values()),
+                marker_color=['#10739e', '#f2931e', '#ae4132', '#12aab5', '#23445d', '#10739e', '#f2931e', '#ae4132', '#12aab5', '#23445d'],
                 name='data'                 # Name the data series
             )
         ]
@@ -76,7 +81,8 @@ class Widget(__Widget):
             dcc.Graph(
                 figure=go.Figure(
                     data=self.get_graph_data(),
-                    layout=self.get_graph_layout()
+                    layout=self.get_graph_layout(
+                        self.get_layout_options())
                 ),
                 className='m-auto'
             )

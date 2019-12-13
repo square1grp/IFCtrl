@@ -37,13 +37,80 @@
                         {
                             "widgets": [
                                 {
+                                    "size": "xlarge",
+                                    "type": "xl-daily_production",
+                                    "config": {
+                                        "title": {
+                                            "text": "Daily Production"
+                                        },
+                                        "metric": "FiltrateFlow",
+                                        "flow_min": -1,
+                                        "avg_mode": false
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "widgets": [
+                                {
+                                    "size": "medium",
+                                    "type": "md-scatter",
+                                    "config": {
+                                        "title": {
+                                            "text": "Avg Flux"
+                                        },
+                                        "metric": "Permeability",
+                                        "mode": "lines"
+                                    }
+                                },
+                                {
+                                    "size": "medium",
+                                    "type": "md-avg_permeability",
+                                    "config": {
+                                        "title": {
+                                            "text": "Avg Permeabiility"
+                                        },
+                                        "metric": "FiltrateFlow",
+                                        "flow_min": -1,
+                                        "avg_mode": true
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "widgets": [
+                                {
+                                    "size": "medium",
+                                    "type": "md-pie",
+                                    "config": {
+                                        "title": {
+                                            "text": "Recovery"
+                                        }
+                                    }
+                                },
+                                {
+                                    "size": "medium",
+                                    "type": "md-scatter",
+                                    "config": {
+                                        "title": {
+                                            "text": "TMP Range"
+                                        },
+                                        "metric": "Permeability",
+                                        "mode": "lines"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "widgets": [
+                                {
                                     "size": "medium",
                                     "type": "md-cleaning_levels",
                                     "config": {
                                         "title": {
                                             "text": "Cleaning Levels"
                                         },
-                                        "metric": "cleans"
+                                        "max-intensity": 4
                                     }
                                 },
                                 {
@@ -57,7 +124,6 @@
                                                 "title": {
                                                     "text": "Cleaning Stats"
                                                 },
-                                                "metric": "",
                                                 "mode": "total+common"
                                             }
                                         },
@@ -68,11 +134,23 @@
                                                 "title": {
                                                     "text": "Cleaning Stats"
                                                 },
-                                                "metric": "",
                                                 "mode": "time+use"
                                             }
                                         }
                                     ]
+                                }
+                            ]
+                        },
+                        {
+                            "widgets": [
+                                {
+                                    "size": "medium",
+                                    "type": "md-sec",
+                                    "config": {
+                                        "title": {
+                                            "text": "SEC"
+                                        }
+                                    }
                                 }
                             ]
                         }

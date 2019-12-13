@@ -67,6 +67,7 @@ class Widget(__Widget):
     # additional layout options
     def get_layout_options(self):
         return dict(
+            xaxis=dict(showticklabels=False), yaxis=dict(showticklabels=False),
             margin=dict(b=30, t=40, r=30)
         )
 
