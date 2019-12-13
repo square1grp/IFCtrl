@@ -140,6 +140,19 @@
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            "widgets": [
+                                {
+                                    "size": "medium",
+                                    "type": "md-sec",
+                                    "config": {
+                                        "title": {
+                                            "text": "SEC"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     ]
                 }
